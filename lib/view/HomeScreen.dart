@@ -72,7 +72,7 @@ Widget RemindersButton(BuildContext context) {
             ),
           ),
           backgroundColor: MaterialStateProperty.all<Color> (
-              Colors.blueAccent),
+              Color(0xFF3EB16F)),
         ),
         child: Wrap(
           children: <Widget>[
@@ -144,7 +144,7 @@ Widget ExerciseButton(BuildContext context) {
               ),
             ),
             backgroundColor: MaterialStateProperty.all<Color> (
-                Colors.blueAccent),
+                Colors.redAccent),
             fixedSize: MaterialStateProperty.all<Size> (
               Size(double.infinity, 30),
             )
@@ -183,7 +183,7 @@ Widget SettingsButton(BuildContext context) {
               ),
             ),
             backgroundColor: MaterialStateProperty.all<Color> (
-                Colors.blueAccent),
+                Colors.black26),
             fixedSize: MaterialStateProperty.all<Size> (
               Size(double.infinity, 30),
             )

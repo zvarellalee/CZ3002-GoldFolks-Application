@@ -5,7 +5,8 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold (
       appBar: AppBar(
-        title: Text("Cognitive Games"),
+          title: Text("Cognitive Games"),
+          backgroundColor: Colors.blueAccent,
       ),
       body: Column (
         children: [
@@ -13,6 +14,15 @@ class GameScreen extends StatelessWidget {
             child: Container(
               color: Colors.black12,
               constraints: BoxConstraints.expand(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [ // TODO: Insert an image for game
+                  CircleAvatar(
+                    radius: 50,
+                  ),
+                  Text("Mental Math", textScaleFactor: 1.5, ),
+                ],
+              ),
               // TODO: Display game 1
             ),
           ),
@@ -20,7 +30,16 @@ class GameScreen extends StatelessWidget {
             child: Container(
               color: Colors.white,
               constraints: BoxConstraints.expand(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [ // TODO: Insert an image for game
+                  CircleAvatar(
+                    radius: 50,
+                  ),
+                  Text("Simon Says", textScaleFactor: 1.5,),
+                ],
               // TODO: Display game 2
+              ),
             ),
           ),
         ],
