@@ -18,9 +18,16 @@ class _VideoListWidgetState extends State<VideoListWidget> {
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           children = <Widget>[
-                Text(snapshot.data["title"],),
-                Image.network(snapshot.data["thumbnail_url"],
-                scale: 3),
+                Text("Exercise 1",),
+                Container(
+                  //flex: 1,
+                  child: AspectRatio(
+                    aspectRatio: 1/1,
+                    child: Image.network(snapshot.data["thumbnail_url"],
+                        fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[
@@ -47,7 +54,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                     ),
                   ),
                   backgroundColor: MaterialStateProperty.all<Color> (
-                      Colors.grey),
+                      Colors.white),
                   fixedSize: MaterialStateProperty.all<Size> (
                     Size(double.infinity, 30),
                   )

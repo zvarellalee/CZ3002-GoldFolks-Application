@@ -13,7 +13,17 @@ class PlaceholderWidget extends StatelessWidget {
         color: color,
           child: Column(
             children: [
-              VideoListWidget("https://www.youtube.com/watch?v=p-rSdt0aFuw"),
+              Container(
+                height: 100.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemExtent: 100.0,
+                  itemCount: 1, //TODO : pull videos from database for dynamic loading
+                  itemBuilder: (BuildContext context, int index) {
+                    return VideoListWidget("https://www.youtube.com/watch?v=p-rSdt0aFuw");
+                    }
+                )
+              )
             ],
           ),
     );

@@ -12,9 +12,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   PageController _pageController;
   int _currentIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.white)
+    PlaceholderWidget(Colors.black12),
+    PlaceholderWidget(Colors.black12),
+    PlaceholderWidget(Colors.black12),
   ];
 
   @override
