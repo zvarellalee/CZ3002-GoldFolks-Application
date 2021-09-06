@@ -20,6 +20,9 @@ class GameScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 50,
                   ),
+                  SizedBox(
+                    height:10,
+                  ),
                   Text("Mental Math", textScaleFactor: 1.5, ),
                 ],
               ),
@@ -35,6 +38,9 @@ class GameScreen extends StatelessWidget {
                 children: [ // TODO: Insert an image for game
                   CircleAvatar(
                     radius: 50,
+                  ),
+                  SizedBox(
+                    height:10,
                   ),
                   Text("Simon Says", textScaleFactor: 1.5,),
                 ],

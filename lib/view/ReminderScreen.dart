@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/widgets/ReminderWidget.dart';
 
 class ReminderScreen extends StatefulWidget {
   @override
@@ -14,10 +15,18 @@ class _ReminderScreenState extends State<ReminderScreen> {
         backgroundColor: Color(0xFF3EB16F),
       ),
       body: Container(
-
+        // TODO: ListView builder
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ReminderWidget("Reminder 1"),
+            ReminderWidget("Reminder 2"),
+          ],
+        )
       ),
       floatingActionButton: FloatingActionButton(
-        elevation: 0, // TODO: flat or shadow?
+        elevation: 1, // TODO: flat or shadow?
         backgroundColor: Color(0xFF3EB16F),
         child: Icon(Icons.add),
         onPressed: () {}, // TODO: navigate to reminder add screen

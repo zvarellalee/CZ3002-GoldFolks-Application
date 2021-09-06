@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'VideoListWidget.dart';
+
 class PlaceholderWidget extends StatelessWidget {
   final Color color;
 
@@ -8,7 +10,12 @@ class PlaceholderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color,
+        color: color,
+          child: Column(
+            children: [
+              VideoListWidget("https://www.youtube.com/watch?v=p-rSdt0aFuw"),
+            ],
+          ),
     );
   }
 }

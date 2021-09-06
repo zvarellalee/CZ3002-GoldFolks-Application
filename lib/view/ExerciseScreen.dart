@@ -13,8 +13,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     PlaceholderWidget(Colors.white),
-    PlaceholderWidget(Colors.black12),
-    PlaceholderWidget(Colors.black26)
+    PlaceholderWidget(Colors.white),
+    PlaceholderWidget(Colors.white)
   ];
 
   @override
