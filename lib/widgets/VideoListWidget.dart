@@ -18,16 +18,32 @@ class _VideoListWidgetState extends State<VideoListWidget> {
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           children = <Widget>[
-                Text("Exercise 1",),
-                Container(
-                  //flex: 1,
-                  child: AspectRatio(
-                    aspectRatio: 1/1,
-                    child: Image.network(snapshot.data["thumbnail_url"],
-                        fit: BoxFit.cover,
-                    ),
+            Expanded(
+              flex: 4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    snapshot.data["title"],
+                    textScaleFactor: 1.25,
+                    style: TextStyle(color: Colors.black,),
+                  ),
+                  //Text(snapshot.data["description"],),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                //flex: 1,
+                child: AspectRatio(
+                  aspectRatio: 1/1,
+                  child: Image.network(snapshot.data["thumbnail_url"],
+                      fit: BoxFit.cover,
                   ),
                 ),
+              ),
+            ),
           ];
         } else if (snapshot.hasError) {
           children = <Widget>[

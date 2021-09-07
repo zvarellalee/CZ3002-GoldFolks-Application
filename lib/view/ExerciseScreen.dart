@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goldfolks/widgets/PlaceholderWidget.dart';
+import 'package:goldfolks/widgets/VideoListBuilder.dart';
 
 class ExerciseScreen extends StatefulWidget {
   @override
