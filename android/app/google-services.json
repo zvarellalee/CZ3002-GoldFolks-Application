@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "684589900325",
+    "project_id": "goldfolks-1b519",
+    "storage_bucket": "goldfolks-1b519.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684589900325:android:50ea39fc0feec243e155cc",
+        "android_client_info": {
+          "package_name": "com.example.goldfolks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684589900325-g1r74n6v1fkuqn7aukkh9o6assmrvchd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzhD1oCB82wD5T35NBTw2EcD9KTcGUCC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684589900325-g1r74n6v1fkuqn7aukkh9o6assmrvchd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
