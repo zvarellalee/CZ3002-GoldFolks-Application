@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goldfolks/widgets/VideoListBuilder.dart';
 
 class ExerciseScreen extends StatefulWidget {
+  static String id = 'ExerciseScreen';
   @override
   State<StatefulWidget> createState() {
     return _ExerciseScreenState();
@@ -57,8 +58,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             label: 'Lower Body',
           ),
           new BottomNavigationBarItem(
-              icon: Icon(Icons.accessibility),
-              label: 'Aerobics',
+            icon: Icon(Icons.accessibility),
+            label: 'Aerobics',
           )
         ],
       ),
@@ -73,5 +74,3 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     });
   }
 }
-
-

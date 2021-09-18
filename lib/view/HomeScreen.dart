@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/view/ExerciseScreen.dart';
+import 'package:goldfolks/view/GameScreen.dart';
+import 'package:goldfolks/view/ReminderScreen.dart';
+import 'package:goldfolks/view/SettingsScreen.dart';
 
 class HomeScreen extends StatelessWidget {
+  static String id = 'HomeScreen';
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -19,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     // TODO: Select name from user account
                     Text(
-                      "Welcome, John!",
+                      "Welcome, ${UserAccountController.userDetails.name}",
                       textScaleFactor: 1.5,
                     ),
                     Text(
@@ -60,7 +66,7 @@ Widget RemindersButton(BuildContext context) {
       child: ElevatedButton(
         onPressed: () {
           print("Pressed Medication");
-          Navigator.pushNamed(context, '/reminder');
+          Navigator.pushNamed(context, ReminderScreen.id);
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -72,15 +78,15 @@ Widget RemindersButton(BuildContext context) {
         ),
         child: Wrap(
           children: <Widget>[
-            Text("Medication Reminders", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.add_alert_rounded,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Medication Reminders", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -95,7 +101,7 @@ Widget GameButton(BuildContext context) {
       child: ElevatedButton(
         onPressed: () {
           print("Pressed Game");
-          Navigator.pushNamed(context, '/game');
+          Navigator.pushNamed(context, GameScreen.id);
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -107,15 +113,15 @@ Widget GameButton(BuildContext context) {
         ),
         child: Wrap(
           children: <Widget>[
-            Text("Cognitive Games", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.videogame_asset,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Cognitive Games", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -130,7 +136,7 @@ Widget ExerciseButton(BuildContext context) {
       child: ElevatedButton(
         onPressed: () {
           print("Pressed Exercise");
-          Navigator.pushNamed(context, '/exercise');
+          Navigator.pushNamed(context, ExerciseScreen.id);
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -144,15 +150,15 @@ Widget ExerciseButton(BuildContext context) {
             )),
         child: Wrap(
           children: <Widget>[
-            Text("Exercise Videos", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.video_collection_sharp,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Exercise Videos", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -167,7 +173,7 @@ Widget SettingsButton(BuildContext context) {
       child: ElevatedButton(
         onPressed: () {
           print("Pressed Settings");
-          Navigator.pushNamed(context, '/settings');
+          Navigator.pushNamed(context, SettingsScreen.id);
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -181,15 +187,15 @@ Widget SettingsButton(BuildContext context) {
             )),
         child: Wrap(
           children: <Widget>[
-            Text("Settings", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.settings,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Settings", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),

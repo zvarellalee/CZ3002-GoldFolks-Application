@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class GameScreen extends StatelessWidget {
+  static String id = 'GamesScreen';
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       appBar: AppBar(
-          title: Text("Cognitive Games"),
-          backgroundColor: Colors.blueAccent,
+        title: Text("Cognitive Games"),
+        backgroundColor: Colors.blueAccent,
       ),
-      body: Column (
+      body: Column(
         children: [
           Expanded(
             child: Container(
@@ -16,14 +17,18 @@ class GameScreen extends StatelessWidget {
               constraints: BoxConstraints.expand(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [ // TODO: Insert an image for game
+                children: [
+                  // TODO: Insert an image for game
                   CircleAvatar(
                     radius: 50,
                   ),
                   SizedBox(
-                    height:10,
+                    height: 10,
                   ),
-                  Text("Mental Math", textScaleFactor: 1.5, ),
+                  Text(
+                    "Mental Math",
+                    textScaleFactor: 1.5,
+                  ),
                 ],
               ),
               // TODO: Display game 1
@@ -35,16 +40,20 @@ class GameScreen extends StatelessWidget {
               constraints: BoxConstraints.expand(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [ // TODO: Insert an image for game
+                children: [
+                  // TODO: Insert an image for game
                   CircleAvatar(
                     radius: 50,
                   ),
                   SizedBox(
-                    height:10,
+                    height: 10,
                   ),
-                  Text("Simon Says", textScaleFactor: 1.5,),
+                  Text(
+                    "Simon Says",
+                    textScaleFactor: 1.5,
+                  ),
                 ],
-              // TODO: Display game 2
+                // TODO: Display game 2
               ),
             ),
           ),

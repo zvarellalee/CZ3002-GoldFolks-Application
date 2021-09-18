@@ -22,20 +22,20 @@ class DatabaseController {
         user)); // mapping the firebase user to the actual user
   }
 
-  // Future<bool> emailAuthentication(String email) async {
-  //   await for (var snapshot in userCollection.snapshots()) {
-  //     var documents = snapshot.docs;
-  //     for (var document in documents) {
-  //       if (document['Email'] == email) {
-  //         return true;
-  //       }
-  //     }
-  //     return false;
-  //   }
-  // }
+  Future<bool> emailAuthentication(String email) async {
+    await for (var snapshot in userCollection.snapshots()) {
+      var documents = snapshot.docs;
+      for (var document in documents) {
+        if (document['Email'] == email) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
 
-  // sign in with email and password
-  Future signInWithEandP(String email, String password) async {
+  // Sign in with email and password
+  Future signInEmailandPass(String email, String password) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -75,7 +75,7 @@ class DatabaseController {
   }
 
   Future updateUserName(String name, User currentUser) async {
-    await currentUser.updateProfile(displayName: name);
+    await currentUser.updateDisplayName(name);
     await currentUser.reload();
   }
 
