@@ -9,6 +9,8 @@ import 'package:goldfolks/view/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
 import 'package:goldfolks/view/LoginScreen.dart';
+import 'package:goldfolks/view/MentalMathMenuScreen.dart';
+import 'package:goldfolks/view/MentalMathTutorialScreen.dart';
 import 'package:goldfolks/view/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 import 'package:goldfolks/view/SignUpScreen.dart';
@@ -43,6 +45,8 @@ class MyApp extends StatelessWidget {
           ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
           HomeScreen.id: (context) => HomeScreen(),
           GameScreen.id: (context) => GameScreen(),
+          MentalMathMenuScreen.id: (context) => MentalMathMenuScreen(),
+          MentalMathTutorialScreen.id: (context) => MentalMathTutorialScreen(),
           ExerciseScreen.id: (context) => ExerciseScreen(),
           ReminderScreen.id: (context) => ReminderScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),

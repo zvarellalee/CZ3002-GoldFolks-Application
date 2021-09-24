@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/view/MentalMathMenuScreen.dart';
 
 class GameScreen extends StatelessWidget {
   static String id = 'GamesScreen';
@@ -13,46 +14,54 @@ class GameScreen extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              color: Colors.black12,
               constraints: BoxConstraints.expand(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // TODO: Insert an image for game
-                  CircleAvatar(
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Mental Math",
-                    textScaleFactor: 1.5,
-                  ),
-                ],
+              child: ElevatedButton (
+                style: ElevatedButton.styleFrom(primary: Colors.black12, shadowColor: Colors.transparent),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // TODO: Insert an image for game
+                    CircleAvatar(
+                      radius: 50,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Mental Math",
+                      textScaleFactor: 1.5,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () => Navigator.pushNamed(context, MentalMathMenuScreen.id),
               ),
               // TODO: Display game 1
             ),
           ),
           Expanded(
             child: Container(
-              color: Colors.white,
               constraints: BoxConstraints.expand(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // TODO: Insert an image for game
-                  CircleAvatar(
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Simon Says",
-                    textScaleFactor: 1.5,
-                  ),
-                ],
+              child: ElevatedButton (
+                style: ElevatedButton.styleFrom(primary: Colors.white, shadowColor: Colors.transparent),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // TODO: Insert an image for game
+                    CircleAvatar(
+                      radius: 50,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Simon Says",
+                      textScaleFactor: 1.5,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () => Navigator.pushNamed(context, MentalMathMenuScreen.id),
                 // TODO: Display game 2
               ),
             ),
