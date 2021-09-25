@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LeaderboardScreen extends StatefulWidget {
+  static String id = "LeaderboardScreen";
   @override
   _LeaderboardScreenState createState() => _LeaderboardScreenState();
 }

@@ -7,6 +7,7 @@ import 'package:goldfolks/view/SettingsScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'HomeScreen';
+  static String name = UserAccountController.userDetails.name;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     // TODO: Select name from user account
                     Text(
-                      "Welcome, ${UserAccountController.userDetails.name}",
+                      "Welcome, $name",
                       textScaleFactor: 1.5,
                     ),
                     Text(
@@ -100,7 +101,6 @@ Widget GameButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Game");
           Navigator.pushNamed(context, GameScreen.id);
         },
         style: ButtonStyle(
@@ -135,7 +135,6 @@ Widget ExerciseButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Exercise");
           Navigator.pushNamed(context, ExerciseScreen.id);
         },
         style: ButtonStyle(
@@ -172,7 +171,6 @@ Widget SettingsButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Settings");
           Navigator.pushNamed(context, SettingsScreen.id);
         },
         style: ButtonStyle(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:goldfolks/view/MentalMathMenuScreen.dart';
+
+import 'MentalMathGame/MentalMathMenuScreen.dart';
 
 class GameScreen extends StatelessWidget {
   static String id = 'GamesScreen';

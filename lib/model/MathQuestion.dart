@@ -3,6 +3,7 @@ class MathQuestion {
   int _operand2;
   int _operator; // 0 = addition, 1 = sub, 2 = mul, 3 = div
   double _answer;
+  int _score; // score for a correct answer
 
   MathQuestion({
     int operand1,
@@ -14,19 +15,24 @@ class MathQuestion {
   _operator  = operator;
   switch (_operator) {
     case 0:
-      _answer =  (operand1 + operand2) as double;
+      _answer =  (operand1 + operand2).toDouble();
+      _score = 10;
       break;
     case 1:
-      _answer = (operand1 - operand2) as double;
+      _answer = (operand1 - operand2).toDouble();
+      _score = 10;
       break;
     case 2:
-      _answer = (operand1 * operand2) as double;
+      _answer = (operand1 * operand2).toDouble();
+      _score = 20;
       break;
     case 3:
       _answer = operand1 / operand2;
+      _score = 20;
       break;
     default:
-      _answer =  (operand1 + operand2) as double;
+      _answer =  (operand1 + operand2).toDouble();
+      _score = 10;
       break;
   }
   }
@@ -38,8 +44,9 @@ class MathQuestion {
   int get operand1 => _operand1;
   int get operand2 => _operand2;
   int get operator => _operator;
-  int get answerInt => _answer as int;
+  int get answerInt => _answer.toInt();
   double get answerDouble => _answer;
+  int get score => _score;
 
   int calcAnswer() {
 

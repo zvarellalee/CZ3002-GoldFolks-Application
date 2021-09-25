@@ -22,27 +22,25 @@ class UserAccountController {
   }
 
   static Future<void> readUserFromDatabase(String name) async {
-    await for (var snapshot in userCollection.snapshots()) {
+    var querySnapshot = await userCollection.get();
+    for (var document in querySnapshot.docs) {
       List<Reminder> Reminders = [];
-      var Documents = snapshot.docs;
-      for (var document in Documents) {
-        if (document.id == name) {
-          try {
-            for (var reminders in document['Reminders']) {
-              Reminders.add(reminders);
-            }
-            userDetails.name = name;
-            userDetails.email = document['Email'];
-            userDetails.SimonSaysScore = document['SimonSaysScore'];
-            userDetails.MentalMathScore = document['MentalMathScore'];
-            userDetails.Reminders = Reminders;
-          } catch (e) {
-            print(e);
+      if (document.id == name) {
+        try {
+          for (var reminders in document['Reminders']) {
+            Reminders.add(reminders);
           }
-          break;
+          userDetails.name = name;
+          userDetails.email = document['Email'];
+          userDetails.SimonSaysScore = document['SimonSaysScore'];
+          //print(document['MentalMathScore']);
+          userDetails.MentalMathScore = document['MentalMathScore'];
+          userDetails.Reminders = Reminders;
+        } catch (e) {
+          print(e);
         }
+        break;
       }
-      break;
     }
   }
 }

@@ -57,19 +57,19 @@ class DatabaseController {
 
       // create a new document for the user with uid
       await updateUserName(name, result.user);
-      await updateUserData(name, email);
+      await updateUserData(name, email,0,0);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e);
     }
   }
 
-  Future updateUserData(String name, String email) async {
-    return await userCollection.doc(name).set({
+  Future updateUserData(String name, String email, int simonSaysScore, int mentalMathScore) async {
+    return await userCollection.doc(name).update({
       'Name': name,
       'Email': email,
-      'SimonSaysScore': 0,
-      'MentalMathScore': 0,
+      'SimonSaysScore': simonSaysScore,
+      'MentalMathScore': mentalMathScore,
       'Reminders': [],
     });
   }

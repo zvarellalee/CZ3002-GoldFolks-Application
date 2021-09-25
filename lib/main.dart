@@ -8,9 +8,11 @@ import 'package:goldfolks/view/ExerciseScreen.dart';
 import 'package:goldfolks/view/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
+import 'package:goldfolks/view/LeaderboardScreen.dart';
 import 'package:goldfolks/view/LoginScreen.dart';
-import 'package:goldfolks/view/MentalMathMenuScreen.dart';
-import 'package:goldfolks/view/MentalMathTutorialScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathMenuScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
 import 'package:goldfolks/view/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 import 'package:goldfolks/view/SignUpScreen.dart';
@@ -44,9 +46,13 @@ class MyApp extends StatelessWidget {
           EmailVerificationScreen.id: (context) => EmailVerificationScreen(),
           ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
           HomeScreen.id: (context) => HomeScreen(),
+          // game screens
           GameScreen.id: (context) => GameScreen(),
           MentalMathMenuScreen.id: (context) => MentalMathMenuScreen(),
+          MentalMathGameScreen.id: (context) => MentalMathGameScreen(),
           MentalMathTutorialScreen.id: (context) => MentalMathTutorialScreen(),
+          LeaderboardScreen.id: (context) => LeaderboardScreen(),
+
           ExerciseScreen.id: (context) => ExerciseScreen(),
           ReminderScreen.id: (context) => ReminderScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
