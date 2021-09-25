@@ -65,7 +65,7 @@ class DatabaseController {
   }
 
   Future updateUserData(String name, String email, int simonSaysScore, int mentalMathScore) async {
-    return await userCollection.doc(name).update({
+    return await userCollection.doc(name).set({
       'Name': name,
       'Email': email,
       'SimonSaysScore': simonSaysScore,
