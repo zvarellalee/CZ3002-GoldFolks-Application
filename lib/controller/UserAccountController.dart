@@ -43,4 +43,30 @@ class UserAccountController {
       }
     }
   }
+
+  static Future<List<UserAccount>> getAllUsers([String sortBy]) async {
+    List<UserAccount> users = [];
+    var querySnapshot = await userCollection.get();
+    for (var document in querySnapshot.docs) {
+      UserAccount user = new UserAccount();
+      List<Reminder> Reminders = [];
+      try {
+        for (var reminders in document['Reminders']) {
+          Reminders.add(reminders);
+        }
+        user.name = document['Name'];
+        user.email = document['Email'];
+        user.SimonSaysScore = document['SimonSaysScore'];
+        user.MentalMathScore = document['MentalMathScore'];
+        user.Reminders = Reminders;
+      } catch (e) {
+        print(e);
+      }
+      users.add(user);
+    }
+    if (sortBy != null)
+      users.sort((a,b) => b.getScore(sortBy).compareTo(a.getScore(sortBy)));
+    return users;
+  }
 }
+

@@ -34,6 +34,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Exercise Videos'),
         backgroundColor: Colors.redAccent,
       ),

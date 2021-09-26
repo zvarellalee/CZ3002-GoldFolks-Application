@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysMenuScreen.dart';
 
 import 'MentalMathGame/MentalMathMenuScreen.dart';
 
@@ -8,6 +9,7 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Cognitive Games"),
         backgroundColor: Colors.blueAccent,
       ),
@@ -62,7 +64,7 @@ class GameScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                onPressed: () => Navigator.pushNamed(context, MentalMathMenuScreen.id),
+                onPressed: () => Navigator.pushNamed(context, SimonSaysMenuScreen.id),
                 // TODO: Display game 2
               ),
             ),

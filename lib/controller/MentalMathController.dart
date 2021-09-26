@@ -7,12 +7,9 @@ import 'package:goldfolks/model/UserAccount.dart';
 import 'DatabaseController.dart';
 
 class MentalMathController {
-  static int _totalScore;
   static int _maxValue = 21; // max value for math question operands
   static final _rng = new Random();
   static final _range = 10;
-  static final DatabaseController _auth = DatabaseController();
-  static UserAccount _user;
 
   /// Generates a math question and returns it as a string
   static MathQuestion generateMathQuestion() {
@@ -40,11 +37,6 @@ class MentalMathController {
     }
     choiceList.shuffle();
     return choiceList;
-  }
-
-  static void resetGame() async {
-    _totalScore = 0;
-
   }
 
   static double _next(int min, int max) {

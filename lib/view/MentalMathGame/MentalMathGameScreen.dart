@@ -15,7 +15,7 @@ class MentalMathGameScreen extends StatefulWidget {
 }
 
 class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
-  static int _maxTime = 5;
+  static int _maxTime = 60;
   static int _counter = _maxTime;
   static int _bestScore = UserAccountController.userDetails.MentalMathScore;
   int _currScore = 0;
@@ -281,7 +281,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
-                    letterSpacing: 6,
+                    letterSpacing: 2,
                     color: Colors.black,
                   ),
                 ),
@@ -294,7 +294,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
-                      letterSpacing: 6,
+                      letterSpacing: 2,
                       color: Colors.black,
                   ),
                 ),

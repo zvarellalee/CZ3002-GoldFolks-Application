@@ -8,7 +8,7 @@ import 'package:goldfolks/view/ExerciseScreen.dart';
 import 'package:goldfolks/view/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
-import 'package:goldfolks/view/LeaderboardScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathLeaderboardScreen.dart';
 import 'package:goldfolks/view/LoginScreen.dart';
 import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
 import 'package:goldfolks/view/MentalMathGame/MentalMathMenuScreen.dart';
@@ -16,6 +16,10 @@ import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
 import 'package:goldfolks/view/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 import 'package:goldfolks/view/SignUpScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysGameScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysMenuScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysTutorialScreen.dart';
 import 'package:goldfolks/view/WelcomeScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -48,10 +52,17 @@ class MyApp extends StatelessWidget {
           HomeScreen.id: (context) => HomeScreen(),
           // game screens
           GameScreen.id: (context) => GameScreen(),
+          // Mental Math game
           MentalMathMenuScreen.id: (context) => MentalMathMenuScreen(),
           MentalMathGameScreen.id: (context) => MentalMathGameScreen(),
           MentalMathTutorialScreen.id: (context) => MentalMathTutorialScreen(),
-          LeaderboardScreen.id: (context) => LeaderboardScreen(),
+          MentalMathLeaderboardScreen.id: (context) => MentalMathLeaderboardScreen(),
+          // Simon Says game
+          SimonSaysMenuScreen.id: (context) => SimonSaysMenuScreen(),
+          SimonSaysGameScreen.id: (context) => SimonSaysGameScreen(),
+          SimonSaysTutorialScreen.id: (context) => SimonSaysTutorialScreen(),
+          SimonSaysLeaderboardScreen.id: (context) => SimonSaysLeaderboardScreen(),
+
 
           ExerciseScreen.id: (context) => ExerciseScreen(),
           ReminderScreen.id: (context) => ReminderScreen(),

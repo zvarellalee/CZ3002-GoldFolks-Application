@@ -66,7 +66,6 @@ Widget RemindersButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Medication");
           Navigator.pushNamed(context, ReminderScreen.id);
         },
         style: ButtonStyle(

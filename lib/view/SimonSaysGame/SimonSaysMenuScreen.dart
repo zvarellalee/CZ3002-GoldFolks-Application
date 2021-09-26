@@ -3,16 +3,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathLeaderboardScreen.dart';
 import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
 
-import 'MentalMathLeaderboardScreen.dart';
-class MentalMathMenuScreen extends StatefulWidget {
-  static String id = "MentalMathMenuScreen";
+import 'SimonSaysGameScreen.dart';
+import 'SimonSaysTutorialScreen.dart';
+
+class SimonSaysMenuScreen extends StatefulWidget {
+  static String id = "SimonSaysMenuScreen";
   @override
-  _MentalMathMenuScreenState createState() => _MentalMathMenuScreenState();
+  _SimonSaysMenuScreenState createState() => _SimonSaysMenuScreenState();
 }
 
-class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
+class _SimonSaysMenuScreenState extends State<SimonSaysMenuScreen> {
 
   FutureOr _onGoBack(dynamic value) {
     // TODO: get Best Score to update correctly.
@@ -37,7 +41,7 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    "Mental Math",
+                    "Simon Says",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -50,7 +54,7 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                     height: 10.0,
                   ),
                   Text(
-                    "Best Score: ${UserAccountController.userDetails.MentalMathScore}",
+                    "Best Score: ${UserAccountController.userDetails.SimonSaysScore}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -81,7 +85,7 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                       ),
                     ),
                     onPressed: () =>
-                        Navigator.pushNamed(context, MentalMathGameScreen.id).then(_onGoBack),
+                        Navigator.pushNamed(context, SimonSaysGameScreen.id).then(_onGoBack),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -104,7 +108,7 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                     ),
                     onPressed: () =>
                         Navigator.pushNamed(
-                            context, MentalMathTutorialScreen.id),
+                            context, SimonSaysTutorialScreen.id),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -127,7 +131,7 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                     ),
                     onPressed: () =>
                         Navigator.pushNamed(
-                            context, MentalMathLeaderboardScreen.id),
+                            context, SimonSaysLeaderboardScreen.id),
                   ),
                   //onPressed:
                 ]

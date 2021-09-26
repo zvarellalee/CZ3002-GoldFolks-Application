@@ -13,6 +13,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Medication Reminders"),
         backgroundColor: Color(0xFF3EB16F),
       ),
