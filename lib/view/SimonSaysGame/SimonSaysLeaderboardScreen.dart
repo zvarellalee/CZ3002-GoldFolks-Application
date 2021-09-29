@@ -139,12 +139,16 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
     return Scaffold(
       //extendBodyBehindAppBar: true,
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black87),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         centerTitle: true,
         title: Text(
           "Leaderboard",
+          style: TextStyle(color: Colors.black87),
         ),
-        backgroundColor: Colors.black26,
+        backgroundColor: Colors.white,//Colors.black26,
         elevation: 0,
       ),
       body: Container(

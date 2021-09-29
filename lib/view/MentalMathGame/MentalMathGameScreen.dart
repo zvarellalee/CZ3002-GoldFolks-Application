@@ -42,6 +42,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
           String email = UserAccountController.userDetails.email;
           int simonSaysScore = UserAccountController.userDetails.SimonSaysScore;
           await db.updateUserData(name, email, simonSaysScore, _currScore);
+          UserAccountController.userDetails.SimonSaysScore = _currScore;
           _bestScore = _currScore;
         }
         // TODO: Save score to user account

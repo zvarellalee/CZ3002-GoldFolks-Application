@@ -7,7 +7,7 @@ import 'package:goldfolks/view/SettingsScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   static String id = 'HomeScreen';
-  static String name = UserAccountController.userDetails.name;
+  //static String name = UserAccountController.userDetails.name;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     // TODO: Select name from user account
                     Text(
-                      "Welcome, $name",
+                      "Welcome, ${UserAccountController.userDetails.name}",
                       textScaleFactor: 1.5,
                     ),
                     Text(

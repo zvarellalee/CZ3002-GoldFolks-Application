@@ -15,6 +15,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           centerTitle: true,
           title: Text("Settings"),
           backgroundColor: Colors.black26,

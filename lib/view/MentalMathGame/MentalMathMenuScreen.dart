@@ -20,15 +20,27 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       //extendBodyBehindAppBar: true,
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
-        backgroundColor: Colors.black26,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black87),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        //foregroundColor: Colors.black87,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
       body: Container(
+        color: Colors.white,
         padding: EdgeInsets.all(40),
         child: SafeArea(
           child: Center(
