@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<UserAccount>.value(
       value: DatabaseController().user,
+      initialData: null,
       child: MaterialApp(
         title: 'GoldFolks',
         theme: ThemeData(

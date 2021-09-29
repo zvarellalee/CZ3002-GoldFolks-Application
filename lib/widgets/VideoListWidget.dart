@@ -77,6 +77,9 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                     minimumSize: MaterialStateProperty.all<Size>(
                       Size(double.infinity, 30),
                     )),
+                onPressed: () {
+                  // TODO: video function
+                },
               ),
             ),
           );

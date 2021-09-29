@@ -13,6 +13,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: ElevatedButton(
+        onPressed: () {  },
         child: Column(
           children: [
             Text(widget.text),

@@ -13,24 +13,24 @@ class SimonSaysButton extends StatefulWidget {
 
 class _SimonSaysButtonState extends State<SimonSaysButton>
   with TickerProviderStateMixin{
-  Animation<Color> _animation;
-  AnimationController _controller;
+  Animation<Color> _animationAI;
+  AnimationController _aiAnimation;
   StreamSubscription _subscription;
-  int _duration = 500;
+  int _durationAI = 500;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: Duration(milliseconds: _duration),
+    _aiAnimation = AnimationController(
+      duration: Duration(milliseconds: _durationAI),
       vsync: this
     );
 
-    _animation = ColorTween(
+    _animationAI = ColorTween(
       begin: Colors.lightBlue[800],
       end: Colors.white,
     ).animate(CurvedAnimation(
-        parent: _controller,
+        parent: _aiAnimation,
         curve: Curves.fastLinearToSlowEaseIn,
         reverseCurve: Curves.ease,
       )..addListener(() {
@@ -46,10 +46,10 @@ class _SimonSaysButtonState extends State<SimonSaysButton>
     //_subscription?.cancel();
     _subscription = animationStream.stream.listen((value) {
       if (value == widget.buttonIndex) {
-        _controller.forward();
+        _aiAnimation.forward();
         Timer(
-        Duration(milliseconds: _duration), () {
-        _controller.reverse();
+        Duration(milliseconds: _durationAI), () {
+        _aiAnimation.reverse();
         });
       }
     });
@@ -57,7 +57,7 @@ class _SimonSaysButtonState extends State<SimonSaysButton>
 
   @override
   dispose() {
-    _controller?.dispose();
+    _aiAnimation?.dispose();
     _subscription.cancel();
     super.dispose();
   }
@@ -74,20 +74,17 @@ class _SimonSaysButtonState extends State<SimonSaysButton>
               borderRadius: BorderRadius.circular(15.0),
             ),
           ),
-          backgroundColor: MaterialStateProperty.all<Color>(_animation.value),
+          overlayColor: MaterialStateProperty.resolveWith(
+                (states) {
+              return (states.contains(MaterialState.pressed) && SimonSaysController.canPlay)
+                  ? Colors.white
+                  : null;
+            },
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(_animationAI.value),
           minimumSize: MaterialStateProperty.all<Size>(
             Size(double.infinity, 30),
-          )),
-      /*
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        //color: Colors.blue,
-        decoration: BoxDecoration(
-          color: _animation.value,
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-      ),
-       */
+          )), child: null,
     );
   }
 }

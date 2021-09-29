@@ -6,7 +6,6 @@ import 'package:goldfolks/controller/MentalMathController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/AnswerScorePair.dart';
 import 'package:goldfolks/model/MathQuestion.dart';
-import 'package:goldfolks/model/UserAccount.dart';
 
 class MentalMathGameScreen extends StatefulWidget {
   static String id = "MentalMathGameScreen";
@@ -45,7 +44,6 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
           UserAccountController.userDetails.SimonSaysScore = _currScore;
           _bestScore = _currScore;
         }
-        // TODO: Save score to user account
       }
     });
   }

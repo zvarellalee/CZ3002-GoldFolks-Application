@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:rxdart/rxdart.dart';
 
+import 'DatabaseController.dart';
+import 'UserAccountController.dart';
+
 class SimonSaysController {
   static final _rng = new Random();
   static final _numSquares = 9;
@@ -11,14 +14,26 @@ class SimonSaysController {
   static StreamController<int> _animationController = new BehaviorSubject();
   static Timer _timer;
   static Duration _animationInterval = Duration(seconds: 1);
-  static StreamController<List<int>> scoreAndLivesStream = new BehaviorSubject();
+  static StreamController<List<int>> _scoreAndLivesStream = new BehaviorSubject();
   static bool _canPlay = false;
   static int _animationIndex = 0;
   static int _lives;
   static int _score;
+  static final DatabaseController db = DatabaseController();
 
   static List<int> _addNextMove() {
     _sequence.add(_rng.nextInt(_numSquares));
+  }
+
+  static void openStream() {
+    _animationController = new BehaviorSubject();
+    _scoreAndLivesStream = new BehaviorSubject();
+  }
+
+  static void closeStream() {
+    _animationController.close();
+    _scoreAndLivesStream.close();
+    _stopTimer();
   }
 
   static void startGame() {
@@ -28,8 +43,17 @@ class SimonSaysController {
     _playAnimation();
   }
 
-  static void endGame() {
+  static void endGame() async{
     print("game end");
+    String name = UserAccountController.userDetails.name;
+    await UserAccountController.readUserFromDatabase(name);
+    if (_score > UserAccountController.userDetails.SimonSaysScore) {
+      String email = UserAccountController.userDetails.email;
+      int mentalMathScore = UserAccountController.userDetails.MentalMathScore;
+      await db.updateUserData(name, email, _score, mentalMathScore);
+      UserAccountController.userDetails.SimonSaysScore = _score;
+    }
+    _scoreAndLivesStream.add([-1,_score]); // -1 signifies end of game.
   }
 
   static bool checkMove(int index) {
@@ -41,7 +65,7 @@ class SimonSaysController {
         if (_playIndex == _sequence.length) { // if successfully tapped until last sequence...
           _score += 1;
           _playIndex = 0;
-          scoreAndLivesStream.add([_lives,_score]);
+          _scoreAndLivesStream.add([_lives,_score]);
           _addNextMove(); // add a new move to the list.
           _playAnimation(); // this also stops the player from playing
         }
@@ -51,7 +75,7 @@ class SimonSaysController {
         } else {
           _lives--;
           _playIndex = 0;
-          scoreAndLivesStream.add([_lives,_score]);
+          _scoreAndLivesStream.add([_lives,_score]);
           _playAnimation();
         }
       }
@@ -64,9 +88,11 @@ class SimonSaysController {
   }
 
   static void _tick(_) {
-    _animationController.add(_sequence[_animationIndex]);
+    if (_animationIndex < _sequence.length) {
+      _animationController.add(_sequence[_animationIndex]);
+    }
     _animationIndex++;
-    if (_animationIndex >= _sequence.length) _stopTimer();
+    if (_animationIndex >= _sequence.length+1) _stopTimer();
   }
 
   static void _stopTimer() {
@@ -80,11 +106,12 @@ class SimonSaysController {
   }
 
   static void resetGame() {
+    _animationIndex = 0;
     _sequence.clear();
     _playIndex = 0;
     _lives = 3;
     _score = 0;
-    scoreAndLivesStream.add([_lives,_score]);
+    _scoreAndLivesStream.add([_lives,_score]);
 
   }
 
@@ -95,4 +122,6 @@ class SimonSaysController {
   static bool get canPlay => _canPlay;
 
   static StreamController<int> get controller => _animationController;
+
+  static StreamController<List<int>> get scoreAndLivesStream => _scoreAndLivesStream;
 }

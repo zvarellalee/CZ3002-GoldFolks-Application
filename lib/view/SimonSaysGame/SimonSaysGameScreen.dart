@@ -4,7 +4,6 @@ import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/controller/SimonSaysController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/widgets/SimonSaysButton.dart';
-import 'package:rxdart/rxdart.dart';
 
 class SimonSaysGameScreen extends StatefulWidget {
   static String id = "SimonSaysGameScreen";
@@ -25,90 +24,103 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
       _gameOver = false;
       _currScore = 0;
     });
+    SimonSaysController.startGame();
   }
   @override
   void initState() {
     super.initState();
+    SimonSaysController.openStream();
     SimonSaysController.startGame();
     //_startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center (
-          child: !_gameOver ?
-          Column (
-            children: [
-              Expanded( // score display
-                flex: 1,
-                child: StreamBuilder(
-                  stream: SimonSaysController.scoreAndLivesStream.stream,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return SizedBox(height: 100, width: 100, child: CircularProgressIndicator());
-                    }
-                    print(snapshot.data);
-                    return Row(
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          SimonSaysController.closeStream();
+        });
+        Navigator.pop(context);
+        return false;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Center (
+            child: StreamBuilder(
+              stream: SimonSaysController.scoreAndLivesStream.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return SizedBox(height: 100, width: 100, child: CircularProgressIndicator());
+                }
+                if (snapshot.data[0] == -1) {
+                  _gameOver = true;
+                }
+                return !_gameOver ?
+                Column (
+                  children: [
+                  Expanded( // score display
+                    flex: 1,
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         _RemainingTriesWidget(lives: snapshot.data[0]),
                         _ScoreWidget(score: snapshot.data[1]),
                       ],
-                    );
-                  }
-                )
-              ),
-              Expanded( // Simon Says display
-                flex: 2,
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(10.0),
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                  Expanded( // Simon Says display
+                    flex: 2,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.all(Radius.circular(20))
-                      ),
+                      width: double.infinity,
+                      height: double.infinity,
                       alignment: Alignment.center,
-                      child: GridView.count(
-                        primary: false,
-                        padding: const EdgeInsets.all(20),
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 3,
-                        children: [
-                          SimonSaysButton(buttonIndex: 0),
-                          SimonSaysButton(buttonIndex: 1),
-                          SimonSaysButton(buttonIndex: 2),
-                          SimonSaysButton(buttonIndex: 3),
-                          SimonSaysButton(buttonIndex: 4),
-                          SimonSaysButton(buttonIndex: 5),
-                          SimonSaysButton(buttonIndex: 6),
-                          SimonSaysButton(buttonIndex: 7),
-                          SimonSaysButton(buttonIndex: 8),
-                        ]
-                      ),
-                      ),
+                      margin: const EdgeInsets.all(10.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.width,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                           ),
+                          alignment: Alignment.center,
+                          child: GridView.count(
+                            primary: false,
+                            padding: const EdgeInsets.all(20),
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                            crossAxisCount: 3,
+                            children: [
+                            SimonSaysButton(buttonIndex: 0),
+                            SimonSaysButton(buttonIndex: 1),
+                            SimonSaysButton(buttonIndex: 2),
+                            SimonSaysButton(buttonIndex: 3),
+                            SimonSaysButton(buttonIndex: 4),
+                            SimonSaysButton(buttonIndex: 5),
+                            SimonSaysButton(buttonIndex: 6),
+                            SimonSaysButton(buttonIndex: 7),
+                            SimonSaysButton(buttonIndex: 8),
+                            ]
+                          ),
+                        ),
+                      )
                     )
-                  )
-                ),
-              Expanded( // bottom buffer
-                flex: 1,
-                child: Container (
-                  color: Colors.transparent,
-                ),
-              ),
-            ]
-          )
-              :
-          _GameOverScreen(),
+                  ),
+                  Expanded( // bottom buffer
+                    flex: 1,
+                    child: Container (
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ]
+                )
+                :
+                _GameOverScreen();
+              }
+            ),
+          ),
         ),
       ),
     );
@@ -128,19 +140,19 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
               children: [
                 Icon( // life 1
                   Icons.favorite,
-                  color: _tries > 0 ? Colors.pink : Colors.transparent,
+                  color: _tries > 0 ? Colors.pink : Colors.black54,
                   size: 24.0,
                 ),
                 SizedBox(width: 10),
                 Icon( // life 2
                   Icons.favorite,
-                  color: _tries > 1 ? Colors.pink : Colors.transparent,
+                  color: _tries > 1 ? Colors.pink : Colors.black54,
                   size: 24.0,
                 ),
                 SizedBox(width: 10),
                 Icon( // life 3
                   Icons.favorite,
-                  color: _tries > 2 ? Colors.pink : Colors.transparent,
+                  color: _tries > 2 ? Colors.pink : Colors.black54,
                   size: 24.0,
                 ),
               ],
