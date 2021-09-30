@@ -3,9 +3,9 @@ import 'package:goldfolks/controller/VideoDetailFetcher.dart';
 import 'package:goldfolks/view/VideoPlayerScreen.dart';
 
 class VideoListWidget extends StatefulWidget {
-  final String url;
+  final String id;
 
-  VideoListWidget(this.url);
+  VideoListWidget(this.id);
   @override
   _VideoListWidgetState createState() => _VideoListWidgetState();
 }
@@ -15,7 +15,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
   Widget build(BuildContext context) {
     List<Widget> children;
     return FutureBuilder<dynamic>(
-        future: VideoDetailFetcher.getVideoInfo(widget.url),
+        future: VideoDetailFetcher.getVideoInfo(widget.id),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             children = <Widget>[
@@ -59,6 +59,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
             ];
           }
           return Container(
+            height: 100.0,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
@@ -70,7 +71,7 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
                     ),
                     backgroundColor:
@@ -79,13 +80,14 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                       Size(double.infinity, 30),
                     )),
                 onPressed: () => Navigator.pushNamed(
-                    context,
-                    VideoPlayerScreen.id,
-                    arguments: widget.url
+                  context,
+                  VideoPlayerScreen.id,
+                  arguments: {'videoId':widget.id}
+                  ),
                 ),
               ),
-            ),
-          );
-        });
+            );
+          }
+        );
   }
 }

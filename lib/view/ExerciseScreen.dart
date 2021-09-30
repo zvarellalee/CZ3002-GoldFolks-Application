@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/VideoPlayerController.dart';
+import 'package:goldfolks/model/VideoCategory.dart';
 import 'package:goldfolks/widgets/VideoListBuilder.dart';
 
 class ExerciseScreen extends StatefulWidget {
@@ -13,9 +15,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   PageController _pageController;
   int _currentIndex = 0;
   final List<Widget> _children = [
-    PlaceholderWidget(Colors.black12),
-    PlaceholderWidget(Colors.black12),
-    PlaceholderWidget(Colors.black12),
+    VideoListBuilder(Colors.black12, VideoCategory.UpperBody),
+    VideoListBuilder(Colors.black12, VideoCategory.LowerBody),
+    VideoListBuilder(Colors.black12, VideoCategory.Aerobic),
   ];
 
   @override
