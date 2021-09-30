@@ -40,6 +40,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         //showControls: false,
       ),
     );
+
     return WillPopScope(
       onWillPop: () async {
         SystemChrome.setPreferredOrientations([
@@ -48,13 +49,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         return true;
       },
       child: Scaffold(
-        body: Container(
-          color: Colors.black,
-          alignment: Alignment.center,
-          child: YoutubePlayerControllerProvider( // Provides controller to all the widget below it.
-            controller: _controller,
-            child: YoutubePlayerIFrame(
-              aspectRatio: 16 / 9,
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child:Container(
+            color: Colors.black,
+            alignment: Alignment.center,
+            child: YoutubePlayerControllerProvider( // Provides controller to all the widget below it.
+              controller: _controller,
+              child: YoutubePlayerIFrame(
+                aspectRatio: 16 / 9,
+              ),
             ),
           ),
         ),
