@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/VideoDetailFetcher.dart';
+import 'package:goldfolks/view/VideoPlayerScreen.dart';
 
 class VideoListWidget extends StatefulWidget {
   final String url;
@@ -77,9 +78,11 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                     minimumSize: MaterialStateProperty.all<Size>(
                       Size(double.infinity, 30),
                     )),
-                onPressed: () {
-                  // TODO: video function
-                },
+                onPressed: () => Navigator.pushNamed(
+                    context,
+                    VideoPlayerScreen.id,
+                    arguments: widget.url
+                ),
               ),
             ),
           );

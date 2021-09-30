@@ -249,3 +249,5 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
     );
   }
 }
+
+// TODO: Lock orientation in game

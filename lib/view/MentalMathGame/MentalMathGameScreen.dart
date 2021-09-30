@@ -41,7 +41,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
           String email = UserAccountController.userDetails.email;
           int simonSaysScore = UserAccountController.userDetails.SimonSaysScore;
           await db.updateUserData(name, email, simonSaysScore, _currScore);
-          UserAccountController.userDetails.SimonSaysScore = _currScore;
+          UserAccountController.userDetails.MentalMathScore = _currScore;
           _bestScore = _currScore;
         }
       }
@@ -328,3 +328,5 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
     );
   }
 }
+
+// TODO: Lock orientation in game

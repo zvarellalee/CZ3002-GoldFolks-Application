@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
-import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
-import 'package:goldfolks/view/MentalMathGame/MentalMathLeaderboardScreen.dart';
-import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
 
 import 'SimonSaysGameScreen.dart';

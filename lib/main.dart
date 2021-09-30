@@ -20,6 +20,7 @@ import 'package:goldfolks/view/SimonSaysGame/SimonSaysGameScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysMenuScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysTutorialScreen.dart';
+import 'package:goldfolks/view/VideoPlayerScreen.dart';
 import 'package:goldfolks/view/WelcomeScreen.dart';
 import 'package:provider/provider.dart';
 
@@ -63,9 +64,9 @@ class MyApp extends StatelessWidget {
           SimonSaysGameScreen.id: (context) => SimonSaysGameScreen(),
           SimonSaysTutorialScreen.id: (context) => SimonSaysTutorialScreen(),
           SimonSaysLeaderboardScreen.id: (context) => SimonSaysLeaderboardScreen(),
-
-
+          // Exercise Video screen
           ExerciseScreen.id: (context) => ExerciseScreen(),
+          VideoPlayerScreen.id: (context) => VideoPlayerScreen(),
           ReminderScreen.id: (context) => ReminderScreen(),
           SettingsScreen.id: (context) => SettingsScreen(),
         },
