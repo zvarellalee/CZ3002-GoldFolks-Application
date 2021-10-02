@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/VideoDetailFetcher.dart';
-import 'package:goldfolks/view/VideoPlayerScreen.dart';
+import 'package:goldfolks/view/ExerciseVideo/VideoPlayerScreen.dart';
 
 class VideoListWidget extends StatefulWidget {
   final String id;

@@ -45,6 +45,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       onWillPop: () async {
         SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
         ]);
         return true;
       },

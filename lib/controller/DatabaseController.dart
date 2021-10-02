@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/model/UserAccount.dart';
 
 class DatabaseController {
@@ -57,21 +58,25 @@ class DatabaseController {
 
       // create a new document for the user with uid
       await updateUserName(name, result.user);
-      await updateUserData(name, email,0,0);
+      await updateUserData(name, email,0,0,[]);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e);
     }
   }
 
-  Future updateUserData(String name, String email, int simonSaysScore, int mentalMathScore) async {
+  Future updateUserData(String name, String email, int simonSaysScore, int mentalMathScore, List<Reminder> reminderList) async {
     return await userCollection.doc(name).set({
       'Name': name,
       'Email': email,
       'SimonSaysScore': simonSaysScore,
       'MentalMathScore': mentalMathScore,
-      'Reminders': [],
+      'Reminders': reminderList,
     });
+  }
+
+  Future updateUserDataMap(String name, Map<String, dynamic> parameterMap) async {
+    return await userCollection.doc(name).update(parameterMap);
   }
 
   Future updateUserName(String name, User currentUser) async {

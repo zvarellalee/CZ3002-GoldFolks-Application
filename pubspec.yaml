@@ -12,7 +12,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: any
+  http: ^0.13.3
   cupertino_icons: ^1.0.2
   firebase_auth: ^1.0.0
   cloud_firestore: ^1.0.0
@@ -24,6 +24,11 @@ dependencies:
   youtube_player_iframe: ^2.2.2
   introduction_screen: ^2.1.0
   rxdart: ^0.27.2
+  sembast: ^3.1.1
+  path_provider: ^2.0.5
+  datetime_picker_formfield: ^2.0.0
+  multi_select_flutter: ^4.0.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

@@ -14,7 +14,6 @@ class SimonSaysGameScreen extends StatefulWidget {
 class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
   int _tries = 3;
   final DatabaseController db = DatabaseController();
-  static int _bestScore = UserAccountController.userDetails.SimonSaysScore;
   int _currScore = 0;
   bool _gameOver = false;
 
@@ -213,7 +212,7 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
             height: 20.0,
           ),
           Text(
-            "Best Score: ${_currScore > _bestScore ? _currScore : _bestScore}",
+            "Best Score: ${_currScore > UserAccountController.userDetails.SimonSaysScore ? _currScore : UserAccountController.userDetails.SimonSaysScore}",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -226,7 +225,7 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
             height: 30.0,
           ),
           Padding(
-            padding: EdgeInsets.all(40),
+            padding: EdgeInsets.fromLTRB(40.0, 10, 40, 10),
             child: ElevatedButton(
               style:
               ElevatedButton.styleFrom(primary: Colors.red[300]),
@@ -243,6 +242,26 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
                 ),
               ),
               onPressed: () => _startGame(),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 40.0),
+            child: ElevatedButton(
+              style:
+              ElevatedButton.styleFrom(primary: Colors.red[300]),
+              child: Padding(
+                padding:
+                const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                child: Text('Exit',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
         ]

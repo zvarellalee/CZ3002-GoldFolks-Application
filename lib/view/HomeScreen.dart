@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
-import 'package:goldfolks/view/ExerciseScreen.dart';
+import 'package:goldfolks/view/ExerciseVideo/ExerciseScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
-import 'package:goldfolks/view/ReminderScreen.dart';
+import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 
 class HomeScreen extends StatelessWidget {

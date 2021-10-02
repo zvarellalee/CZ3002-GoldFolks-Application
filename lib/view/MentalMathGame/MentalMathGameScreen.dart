@@ -38,9 +38,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
         String name = UserAccountController.userDetails.name;
         await UserAccountController.readUserFromDatabase(name);
         if (_currScore > UserAccountController.userDetails.MentalMathScore) {
-          String email = UserAccountController.userDetails.email;
-          int simonSaysScore = UserAccountController.userDetails.SimonSaysScore;
-          await db.updateUserData(name, email, simonSaysScore, _currScore);
+          await db.updateUserDataMap(name, {"MentalMathScore": _currScore});
           UserAccountController.userDetails.MentalMathScore = _currScore;
           _bestScore = _currScore;
         }
@@ -301,7 +299,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
                   height: 30.0,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(40),
+                  padding: EdgeInsets.fromLTRB(40.0, 10, 40, 10),
                   child: ElevatedButton(
                     style:
                     ElevatedButton.styleFrom(primary: Colors.red[300]),
@@ -318,6 +316,26 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
                       ),
                     ),
                     onPressed: () => _startTimer(),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 40.0),
+                  child: ElevatedButton(
+                    style:
+                    ElevatedButton.styleFrom(primary: Colors.red[300]),
+                    child: Padding(
+                      padding:
+                      const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                      child: Text('Exit',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
               ]

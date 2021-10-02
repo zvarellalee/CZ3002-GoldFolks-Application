@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/widgets/ReminderWidget.dart';
 
+import 'AddReminderScreen.dart';
+
 class ReminderScreen extends StatefulWidget {
   static String id = "ReminderScreen";
 
@@ -35,7 +37,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         elevation: 1, // TODO: flat or shadow?
         backgroundColor: Color(0xFF3EB16F),
         child: Icon(Icons.add),
-        onPressed: () {}, // TODO: navigate to reminder add screen
+        onPressed: () => Navigator.pushNamed(context, AddReminderScreen.id), // TODO: navigate to reminder add screen
       ),
     );
   }

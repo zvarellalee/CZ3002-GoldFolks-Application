@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:goldfolks/controller/VideoPlayerController.dart';
 import 'package:goldfolks/model/VideoCategory.dart';
 import 'package:goldfolks/widgets/VideoListBuilder.dart';
 
