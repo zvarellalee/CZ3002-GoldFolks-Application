@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +25,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   String _description;
   String _frequencyString;
   int _frequency = 1;
-  List<DateTime> _frequencyTiming;
+  List<TimeOfDay> _frequencyTiming;
   List<int> _selectedDaysList;
   DateTime _endDate;
   List<MultiSelectItem<int>> _daysList;
@@ -45,6 +49,8 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     _daysList.add(MultiSelectItem(4,"Fri"));
     _daysList.add(MultiSelectItem(5,"Sat"));
     _daysList.add(MultiSelectItem(6,"Sun"));
+
+    _frequencyTiming = List.filled(4, TimeOfDay.now());
   }
 
   @override
@@ -312,7 +318,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         width: 10,
       ),
       itemBuilder: (context, index) {
-        _frequencyTiming = List.filled(_frequency, DateTime.now());
         return Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -337,7 +342,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                   );
                   return time == null ? null : DateTimeField.convert(time);
                 },
-                onChanged: (selectedTime) => _frequencyTiming[index] = selectedTime,
+                onChanged: (selectedTime) => _frequencyTiming[index] = TimeOfDay.fromDateTime(selectedTime),
               ),
             ),
           ]
@@ -367,7 +372,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
       selectedTextStyle: TextStyle(color: Colors.blue[800]),
       onTap: (values) {
         _selectedDaysList = values;
-        print(_selectedDaysList);
       },
     );
   }
@@ -446,21 +450,31 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 fontWeight: FontWeight.bold),
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState.validate()) {
+            List<TimeOfDay> selectedFrequencies = _frequencyTiming.take(_frequency).toList();
             Reminder newReminder = new Reminder(
-              reminderId: 0, // TODO: initialize this
+              reminderId: _generateNewId(),
               medicineName: _medicineName,
               medicineType: _medicineType,
               endDate: _endDate,
               frequency: _frequency,
-              frequencyTiming: _frequencyTiming,
+              frequencyTiming: selectedFrequencies,
               days: _selectedDaysList,
               description: _description,
             );
-            print("created");
+            //OfflineDatabaseController offlineDb = OfflineDatabaseController();
+            //await offlineDb.createReminder(newReminder);
+            String name = UserAccountController.userDetails.name;
+            DatabaseController db = DatabaseController();
+            await db.addReminder(name, newReminder);
             Navigator.pop(context);
           }
         });
+  }
+
+  int _generateNewId() {
+    Random rng = new Random();
+    return DateTime.now().millisecondsSinceEpoch + rng.nextInt(99);
   }
 }

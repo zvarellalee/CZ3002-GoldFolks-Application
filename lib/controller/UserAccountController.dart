@@ -23,12 +23,15 @@ class UserAccountController {
 
   static Future<void> readUserFromDatabase(String name) async {
     var querySnapshot = await userCollection.get();
+    var reminderSnapshot = await userCollection.doc(name).collection('Reminders').get();
     for (var document in querySnapshot.docs) {
       List<Reminder> Reminders = [];
       if (document.id == name) {
         try {
-          for (var reminders in document['Reminders']) {
-            Reminders.add(reminders);
+          if (reminderSnapshot != null) {
+            for (var reminder in reminderSnapshot.docs) {
+              Reminders.add(Reminder.fromJson(reminder.data()));
+            }
           }
           userDetails.name = name;
           userDetails.email = document['Email'];
@@ -51,10 +54,13 @@ class UserAccountController {
       UserAccount user = new UserAccount();
       List<Reminder> Reminders = [];
       try {
-        for (var reminders in document['Reminders']) {
-          Reminders.add(reminders);
-        }
         user.name = document['Name'];
+        var reminderSnapshot = await userCollection.doc(user.name).collection('Reminders').get();
+        if (reminderSnapshot != null) {
+          for (var reminder in reminderSnapshot.docs) {
+            Reminders.add(Reminder.fromJson(reminder.data()));
+          }
+        }
         user.email = document['Email'];
         user.SimonSaysScore = document['SimonSaysScore'];
         user.MentalMathScore = document['MentalMathScore'];

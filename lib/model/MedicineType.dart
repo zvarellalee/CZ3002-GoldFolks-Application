@@ -6,6 +6,25 @@ enum MedicineType {
   Other,
 }
 
+class StringToEnum {
+  static MedicineType toEnum(String string) {
+    switch (string) {
+      case 'Liquid':
+        return MedicineType.Liquid;
+      case 'Pill':
+        return MedicineType.Pill;
+      case 'Syringe':
+        return MedicineType.Syringe;
+      case 'Tablet':
+        return MedicineType.Tablet;
+      case 'Other':
+        return MedicineType.Other;
+      default:
+        return null;
+    }
+  }
+}
+
 extension MedicineString on String {
   MedicineType get medicineType {
     switch (this) {
@@ -19,6 +38,8 @@ extension MedicineString on String {
         return MedicineType.Tablet;
       case 'Other':
         return MedicineType.Other;
+      default:
+        return null;
     }
   }
 }

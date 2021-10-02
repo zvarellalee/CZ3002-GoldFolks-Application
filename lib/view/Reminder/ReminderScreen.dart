@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/model/MedicineType.dart';
+import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/widgets/ReminderWidget.dart';
 
 import 'AddReminderScreen.dart';
@@ -24,15 +28,28 @@ class _ReminderScreenState extends State<ReminderScreen> {
         backgroundColor: Color(0xFF3EB16F),
       ),
       body: Container(
-          // TODO: ListView builder
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ReminderWidget("Reminder 1"),
-              ReminderWidget("Reminder 2"),
-            ],
-          )),
+        color: Colors.black12,
+        width: double.infinity,
+        height: double.infinity,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('Users').doc(UserAccountController.userDetails.name).collection('Reminders').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData)
+                return new Text('Loading...');
+              return new ListView(
+                padding: EdgeInsets.all(10),
+                shrinkWrap: true,
+                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  return new ReminderWidget(
+                      document['medicineName'],
+                      StringToEnum.toEnum(document['medicineType']),
+                      new List<String>.from(document['frequencyTiming']).map((e) => Reminder.stringToTimeOfDay(e)).toList(),
+                  );
+                }).toList(),
+              );
+            },
+          ),
+      ),
       floatingActionButton: FloatingActionButton(
         elevation: 1, // TODO: flat or shadow?
         backgroundColor: Color(0xFF3EB16F),
