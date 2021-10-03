@@ -19,7 +19,7 @@ class ReminderWidget extends StatefulWidget {
 
 class _ReminderWidgetState extends State<ReminderWidget> {
   DateFormat format = DateFormat('dd MMM, yyyy');
-  Widget icon() {
+  Widget icon(double size) {
     IconData data;
     switch(widget.medicineType) {
       case MedicineType.Liquid:
@@ -41,7 +41,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
       return Icon(
         data,
         color: Color(0xFF3EB16F),
-        size: 50,
+        size: size,
       );
   }
 
@@ -72,8 +72,6 @@ class _ReminderWidgetState extends State<ReminderWidget> {
           child: Padding(
             padding: EdgeInsets.all(15),
             child: Row(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Expanded(
                   flex:2,
@@ -100,10 +98,9 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                   flex: 1,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    child: icon(),
+                    child: icon(50),
                   ),
                 ),
-
               ]
             ),
           ),
@@ -119,11 +116,30 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        children: [
+                          Text(
+                              "Type: ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              )
+                          ),
+                          Text(
+                            widget.medicineType.string,
+                          ),
+                          SizedBox(width: 5.0),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: icon(25),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height:10.0),
                       Text(
-                        widget.medicineType.string,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )
+                          "Description:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )
                       ),
                       SizedBox(height:10.0),
                       Container(
@@ -217,11 +233,18 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                       ),
                     ),
                     SizedBox(height:10.0),
-                    Text(
-                        "Ends on ${format.format(widget.endDate)}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )
+                    Row(
+                      children: [
+                        Text(
+                            "Ends on: ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                        Text(
+                            "${format.format(widget.endDate)}",
+                        ),
+                      ]
                     ),
                     SizedBox(height:10.0),
                   ]
