@@ -41,9 +41,12 @@ class _ReminderScreenState extends State<ReminderScreen> {
                 shrinkWrap: true,
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                   return new ReminderWidget(
-                      document['medicineName'],
-                      StringToEnum.toEnum(document['medicineType']),
-                      new List<String>.from(document['frequencyTiming']).map((e) => Reminder.stringToTimeOfDay(e)).toList(),
+                    document['medicineName'],
+                    StringToEnum.toEnum(document['medicineType']),
+                    document['description'],
+                    DateTime.parse(document['endDate']),
+                    new List<int>.from(document['days']),
+                    new List<String>.from(document['frequencyTiming']).map((e) => Reminder.stringToTimeOfDay(e)).toList(),
                   );
                 }).toList(),
               );

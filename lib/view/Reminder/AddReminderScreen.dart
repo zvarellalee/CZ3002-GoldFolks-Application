@@ -453,6 +453,11 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             List<TimeOfDay> selectedFrequencies = _frequencyTiming.take(_frequency).toList();
+            selectedFrequencies.sort((a,b) {
+              int cmp = a.hour.compareTo(b.hour);
+              if (cmp != 0) return cmp;
+              return a.minute.compareTo(b.minute);
+            });
             Reminder newReminder = new Reminder(
               reminderId: _generateNewId(),
               medicineName: _medicineName,
