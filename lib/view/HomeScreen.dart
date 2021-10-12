@@ -5,6 +5,7 @@ import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 
+
 class HomeScreen extends StatelessWidget {
   static String id = 'HomeScreen';
   //static String name = UserAccountController.userDetails.name;

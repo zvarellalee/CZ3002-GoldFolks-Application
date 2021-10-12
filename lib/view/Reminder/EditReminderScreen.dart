@@ -14,13 +14,14 @@ import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
-class AddReminderScreen extends StatefulWidget {
+class EditReminderScreen extends StatefulWidget {
   static String id = "EditReminderScreen";
+
   @override
-  _AddReminderScreenState createState() => _AddReminderScreenState();
+  _EditReminderScreenState createState() => _EditReminderScreenState();
 }
 
-class _AddReminderScreenState extends State<AddReminderScreen> {
+class _EditReminderScreenState extends State<EditReminderScreen> {
   final _formKey = GlobalKey<FormState>();
   final _format = DateFormat("HH:mm");
   final _selectDateFormat = DateFormat("yMd");
@@ -37,19 +38,18 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   @override
   void initState() {
+    // TODO: implement initState
+    Reminder reminder = ModalRoute.of(context).settings.arguments;
     _loadDaysList();
     super.initState();
-    localNotificationManager.setOnNotificationClick(onNotificationClick);
-  }
-
-  void sendNotification(Reminder reminderInfo) async {
-    await localNotificationManager.showDailyAtTimeNotification(reminderInfo);
-    Navigator.pop(context);
-  }
-
-  onNotificationClick(String payload) {
-    Navigator.pushNamed(context, ScreenController.id);
-    Navigator.pushNamed(context, ReminderScreen.id);
+    //localNotificationManager.setOnNotificationClick(onNotificationClick);
+    _medicineName = reminder.medicineName;
+    _description = reminder.description;
+    _frequency = reminder.frequency;
+    _frequencyTiming = reminder.frequencyTiming;
+    _selectedDaysList = reminder.days;
+    _endDate = reminder.endDate;
+    _medicineType = reminder.medicineType;
   }
 
   _loadDaysList() {
@@ -69,6 +69,8 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Reminder reminder = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -89,15 +91,15 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             child: ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                _medicationNameField(),
+                _medicationNameField(reminder),
                 SizedBox(height: 20.0),
-                _medicationTypeSelector(),
+                _medicationTypeSelector(reminder),
                 SizedBox(height: 20.0),
-                _descriptionPanel(),
+                _descriptionPanel(reminder),
                 SizedBox(height: 20.0),
                 _schedulePanel(),
                 SizedBox(height: 12.0),
-                _confirmationWidget(),
+                _confirmationWidget(reminder),
               ],
             ),
           ),
@@ -107,7 +109,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     );
   }
 
-  Widget _medicationNameField() {
+  Widget _medicationNameField(Reminder reminder) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,6 +124,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             border: OutlineInputBorder(),
             hintText: 'Enter the medicine name',
           ),
+          initialValue: reminder.medicineName,
           validator: (val) =>
               val.isNotEmpty ? null : 'Please enter a medicine name',
           onChanged: (val) {
@@ -136,7 +139,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     );
   }
 
-  Widget _medicationTypeSelector() {
+  Widget _medicationTypeSelector(Reminder reminder) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -150,7 +153,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
           decoration: InputDecoration(
             //icon: Icon(Icons.medication_rounded),
             border: OutlineInputBorder(),
-            hintText: "Select a medicine type",
+            hintText: reminder.medicineType.string,
           ),
           value: _medicineType.string,
           validator: (val) => val != null ? null : 'Select a type',
@@ -159,7 +162,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
           alignment: Alignment.center,
           iconSize: 24,
           elevation: 16,
-          //style: const TextStyle(color: Colors.deepPurple),
           onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
           onChanged: (String newMedicine) {
             setState(() {
@@ -413,7 +415,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     );
   }
 
-  Widget _descriptionPanel() {
+  Widget _descriptionPanel(Reminder reminder) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -428,6 +430,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             border: OutlineInputBorder(),
             hintText: 'Enter a description',
           ),
+          initialValue: reminder.description,
           keyboardType: TextInputType.multiline,
           minLines: 5, //Normal textInputField will be displayed
           maxLines: 5,
@@ -443,7 +446,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     );
   }
 
-  Widget _confirmationWidget() {
+  Widget _confirmationWidget(Reminder reminder) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.blue),
         child: Padding(
@@ -463,7 +466,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
               return a.minute.compareTo(b.minute);
             });
             Reminder newReminder = new Reminder(
-              reminderId: _generateNewId(),
+              reminderId: reminder.reminderId,
               medicineName: _medicineName,
               medicineType: _medicineType,
               endDate: _endDate,
@@ -476,15 +479,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             //await offlineDb.createReminder(newReminder);
             String name = UserAccountController.userDetails.name;
             DatabaseController db = DatabaseController();
-            await db.addReminder(name, newReminder);
-            sendNotification(newReminder);
+            await db.updateReminder(name, newReminder);
             Navigator.pop(context);
           }
         });
-  }
-
-  int _generateNewId() {
-    Random rng = new Random();
-    return DateTime.now().millisecondsSinceEpoch + rng.nextInt(99);
   }
 }

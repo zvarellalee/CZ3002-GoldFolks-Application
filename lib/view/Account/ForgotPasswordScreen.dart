@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/view/LoginScreen.dart';
+import 'package:goldfolks/view/Account/LoginScreen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   static String id = "ForgotPasswordScreen";

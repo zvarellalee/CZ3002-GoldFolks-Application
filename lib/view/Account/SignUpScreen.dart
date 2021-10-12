@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
-import 'package:goldfolks/view/LoginScreen.dart';
+import 'package:goldfolks/view/Account/LoginScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   static String id = 'SignUpScreen';

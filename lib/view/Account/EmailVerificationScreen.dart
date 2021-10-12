@@ -3,7 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/view/SignUpScreen.dart';
+import 'package:goldfolks/view/Account/SignUpScreen.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   static String id = "EmailVerificationScreen";

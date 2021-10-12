@@ -2,8 +2,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/view/EmailVerificationScreen.dart';
-import 'package:goldfolks/view/ForgotPasswordScreen.dart';
+import 'package:goldfolks/view/Account/EmailVerificationScreen.dart';
+import 'package:goldfolks/view/Account/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {

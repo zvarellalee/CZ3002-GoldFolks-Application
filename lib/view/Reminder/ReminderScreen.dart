@@ -31,33 +31,42 @@ class _ReminderScreenState extends State<ReminderScreen> {
         color: Colors.black12,
         width: double.infinity,
         height: double.infinity,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('Users').doc(UserAccountController.userDetails.name).collection('Reminders').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData)
-                return new Text('Loading...');
-              return new ListView(
-                padding: EdgeInsets.all(10),
-                shrinkWrap: true,
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
-                  return new ReminderWidget(
-                    document['medicineName'],
-                    StringToEnum.toEnum(document['medicineType']),
-                    document['description'],
-                    DateTime.parse(document['endDate']),
-                    new List<int>.from(document['days']),
-                    new List<String>.from(document['frequencyTiming']).map((e) => Reminder.stringToTimeOfDay(e)).toList(),
-                  );
-                }).toList(),
-              );
-            },
-          ),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Users')
+              .doc(UserAccountController.userDetails.name)
+              .collection('Reminders')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) return new Text('Loading...');
+            return new ListView(
+              padding: EdgeInsets.all(10),
+              shrinkWrap: true,
+              children: snapshot.data.docs.map((DocumentSnapshot document) {
+                return new ReminderWidget(
+                  document['medicineName'],
+                  StringToEnum.toEnum(document['medicineType']),
+                  document['description'],
+                  DateTime.parse(document['endDate']),
+                  document['frequency'],
+                  new List<int>.from(document['days']),
+                  new List<String>.from(document['frequencyTiming'])
+                      .map((e) => Reminder.stringToTimeOfDay(e))
+                      .toList(),
+                  document['reminderId'],
+                );
+              }).toList(),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 1, // TODO: flat or shadow?
         backgroundColor: Color(0xFF3EB16F),
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, AddReminderScreen.id), // TODO: navigate to reminder add screen
+        onPressed: () => Navigator.pushNamed(context,
+            AddReminderScreen.id), // TODO: navigate to reminder add screen
       ),
     );
   }

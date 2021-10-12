@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/controller/MentalMathController.dart';
+import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/AnswerScorePair.dart';
 import 'package:goldfolks/model/MathQuestion.dart';
@@ -36,7 +37,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
       } else { // when timer ends
         _timer.cancel();
         String name = UserAccountController.userDetails.name;
-        await UserAccountController.readUserFromDatabase(name);
+        await ScreenController.UserCntrlAccount.readUserFromDatabase(name);
         if (_currScore > UserAccountController.userDetails.MentalMathScore) {
           await db.updateUserDataMap(name, {"MentalMathScore": _currScore});
           UserAccountController.userDetails.MentalMathScore = _currScore;

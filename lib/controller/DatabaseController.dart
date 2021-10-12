@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/model/UserAccount.dart';
 
@@ -41,12 +42,14 @@ class DatabaseController {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+      await UserAccountController.populateUser();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
       return null;
     }
   }
+
 // ------- for users ---------
   // register with email and password
   Future registerNewUser(String email, String password, String name) async {
@@ -58,14 +61,17 @@ class DatabaseController {
 
       // create a new document for the user with uid
       await updateUserName(name, result.user);
-      await updateUserData(name, email,0,0,[]);
+      DatabaseController DB = DatabaseController();
+      await DB.updateUserData(name, email, 0, 0, []);
+      await UserAccountController.populateUser();
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e);
     }
   }
 
-  Future updateUserData(String name, String email, int simonSaysScore, int mentalMathScore, List<Reminder> reminderList) async {
+  Future updateUserData(String name, String email, int simonSaysScore,
+      int mentalMathScore, List<Reminder> reminderList) async {
     await userCollection.doc(name).set({
       'Name': name,
       'Email': email,
@@ -78,11 +84,13 @@ class DatabaseController {
       await userCollection
           .doc(name)
           .collection('Reminders')
-          .doc(r.reminderId.toString()).set(r.toJson());
+          .doc(r.reminderId.toString())
+          .set(r.toJson());
     }
   }
 
-  Future updateUserDataMap(String name, Map<String, dynamic> parameterMap) async {
+  Future updateUserDataMap(
+      String name, Map<String, dynamic> parameterMap) async {
     return await userCollection.doc(name).update(parameterMap);
   }
 
@@ -118,17 +126,19 @@ class DatabaseController {
     else
       return _auth.currentUser.displayName;
   }
+
   //------ Reminders ---------
   /// Function for retrieving the reminder list of a given user.
-  Future<List<Reminder>> getReminders(String name) async{
-    var querySnapshot = await userCollection.doc(name).collection('Reminders').get();
+  Future<List<Reminder>> getReminders(String name) async {
+    var querySnapshot =
+        await userCollection.doc(name).collection('Reminders').get();
     List<Reminder> reminderList = [];
     for (var document in querySnapshot.docs) {
       try {
         Reminder r = Reminder.fromJson(document.data());
         reminderList.add(r);
       } catch (e) {
-        print (e);
+        print(e);
       }
     }
     return reminderList;
@@ -136,20 +146,41 @@ class DatabaseController {
 
   /// Function for adding a single new reminder
   Future addReminder(String name, Reminder reminder) async {
-    return await userCollection.doc(name).collection('Reminders').doc(
-        reminder.reminderId.toString()).set(reminder.toJson());
+    return await userCollection
+        .doc(name)
+        .collection('Reminders')
+        .doc(reminder.reminderId.toString())
+        .set(reminder.toJson());
+  }
+
+  /// Function for updating selected reminder
+  Future updateReminder(String name, Reminder reminder) async {
+    await userCollection
+        .where("remainderId", isEqualTo: reminder.reminderId.toString())
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        userCollection.doc(element.id).update(reminder.toJson());
+      });
+    });
   }
 
   /// Function for adding a list of reminders
   Future addReminderList(String name, List<Reminder> reminderList) async {
     for (Reminder reminder in reminderList)
-      await userCollection.doc(name).collection('Reminders').doc(
-          reminder.reminderId.toString()).set(reminder.toJson());
+      await userCollection
+          .doc(name)
+          .collection('Reminders')
+          .doc(reminder.reminderId.toString())
+          .set(reminder.toJson());
   }
 
   /// Function for deleting a reminder
   Future deleteReminder(String name, Reminder reminder) async {
-    return await userCollection.doc(name).collection('Reminders').doc(
-          reminder.reminderId.toString()).delete();
+    return await userCollection
+        .doc(name)
+        .collection('Reminders')
+        .doc(reminder.reminderId.toString())
+        .delete();
   }
 }

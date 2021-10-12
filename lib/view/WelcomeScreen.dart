@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:goldfolks/view/EmailVerificationScreen.dart';
-import 'package:goldfolks/view/LoginScreen.dart';
+import 'package:goldfolks/view/Account/EmailVerificationScreen.dart';
+import 'package:goldfolks/view/Account/LoginScreen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'WelcomeScreen';
