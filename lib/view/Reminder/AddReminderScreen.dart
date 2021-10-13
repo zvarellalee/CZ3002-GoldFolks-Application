@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/controller/LocalNotificationController.dart';
 import 'package:goldfolks/controller/ScreenController.dart';
@@ -11,11 +10,9 @@ import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:intl/intl.dart';
-import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class AddReminderScreen extends StatefulWidget {
-  static String id = "EditReminderScreen";
+  static String id = "AddReminderScreen";
   @override
   _AddReminderScreenState createState() => _AddReminderScreenState();
 }
@@ -30,14 +27,14 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   String _frequencyString;
   int _frequency = 1;
   List<TimeOfDay> _frequencyTiming;
-  List<int> _selectedDaysList;
+  //List<int> _selectedDaysList;
   DateTime _endDate;
-  List<MultiSelectItem<int>> _daysList;
+  //List<MultiSelectItem<int>> _daysList;
   MedicineType _medicineType;
 
   @override
   void initState() {
-    _loadDaysList();
+    //_loadDaysList();
     super.initState();
     localNotificationManager.setOnNotificationClick(onNotificationClick);
   }
@@ -51,7 +48,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     Navigator.pushNamed(context, ScreenController.id);
     Navigator.pushNamed(context, ReminderScreen.id);
   }
-
+  /*
   _loadDaysList() {
     _daysList = [];
     _selectedDaysList = [];
@@ -64,11 +61,12 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     _daysList.add(MultiSelectItem(5, "Sat"));
     _daysList.add(MultiSelectItem(6, "Sun"));
 
-    _frequencyTiming = List.filled(4, TimeOfDay.now());
   }
+ */
 
   @override
   Widget build(BuildContext context) {
+    _frequencyTiming = List.filled(4, TimeOfDay.now());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -188,7 +186,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Medication Type",
+          "Schedule",
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w700,
@@ -232,6 +230,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 child: _timeRowGenerator(),
               ),
               SizedBox(height: 12.0),
+              /*
               Text(
                 "On days",
                 style: TextStyle(
@@ -245,6 +244,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
                 child: _daySelector(),
               ),
               SizedBox(height: 12.0),
+               */
               Text(
                 "End date",
                 style: TextStyle(
@@ -358,7 +358,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
           ]);
         });
   }
-
+  /*
   Widget _daySelector() {
     return MultiSelectChipField(
       items: _daysList,
@@ -383,6 +383,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
       },
     );
   }
+   */
 
   Widget _dateSelector() {
     return DateTimeField(
@@ -469,7 +470,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
               endDate: _endDate,
               frequency: _frequency,
               frequencyTiming: selectedFrequencies,
-              days: _selectedDaysList,
+              //days: _selectedDaysList,
               description: _description,
             );
             //OfflineDatabaseController offlineDb = OfflineDatabaseController();

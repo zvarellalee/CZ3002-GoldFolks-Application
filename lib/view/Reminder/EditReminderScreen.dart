@@ -1,21 +1,16 @@
-import 'dart:math';
-
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/controller/LocalNotificationController.dart';
-import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
-import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:intl/intl.dart';
-import 'package:multi_select_flutter/chip_field/multi_select_chip_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 class EditReminderScreen extends StatefulWidget {
   static String id = "EditReminderScreen";
+  final Reminder reminder;
+
+  const EditReminderScreen({Key key, this.reminder}) : super(key: key);
 
   @override
   _EditReminderScreenState createState() => _EditReminderScreenState();
@@ -31,29 +26,27 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   String _frequencyString;
   int _frequency = 1;
   List<TimeOfDay> _frequencyTiming;
-  List<int> _selectedDaysList;
+  //List<int> _selectedDaysList;
   DateTime _endDate;
-  List<MultiSelectItem<int>> _daysList;
+  //List<MultiSelectItem<int>> _daysList;
   MedicineType _medicineType;
 
   @override
   void initState() {
     // TODO: implement initState
-
-    _loadDaysList();
-    super.initState();
+    //_loadDaysList();
 
     //localNotificationManager.setOnNotificationClick(onNotificationClick);
 
-    Future.delayed(Duration.zero, () {
-      Reminder reminder = ModalRoute.of(context).settings.arguments;
-      _medicineName = reminder.medicineName;
-      _description = reminder.description;
-      _frequency = reminder.frequency;
-      _frequencyTiming = reminder.frequencyTiming;
-      _selectedDaysList = reminder.days;
-      _endDate = reminder.endDate;
-      _medicineType = reminder.medicineType;
+    //Future.delayed(Duration.zero, () {
+      //Reminder reminder = ModalRoute.of(context).settings.arguments;
+      _medicineName = widget.reminder.medicineName;
+      _description = widget.reminder.description;
+      _frequency = widget.reminder.frequency;
+      _frequencyTiming = widget.reminder.frequencyTiming;
+      //_selectedDaysList = reminder.days;
+      _endDate = widget.reminder.endDate;
+      _medicineType = widget.reminder.medicineType;
 
       switch (_frequency) {
         case 1:
@@ -69,9 +62,11 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
           _frequencyString = "Four times a day";
           break;
       }
-    });
-  }
+    //});
 
+    super.initState();
+  }
+  /*
   _loadDaysList() {
     _daysList = [];
     _selectedDaysList = [];
@@ -86,11 +81,10 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
 
     _frequencyTiming = List.filled(4, TimeOfDay.now());
   }
+   */
 
   @override
   Widget build(BuildContext context) {
-    Reminder reminder = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -111,15 +105,15 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
             child: ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                _medicationNameField(reminder),
+                _medicationNameField(widget.reminder),
                 SizedBox(height: 20.0),
-                _medicationTypeSelector(reminder),
+                _medicationTypeSelector(widget.reminder),
                 SizedBox(height: 20.0),
-                _descriptionPanel(reminder),
+                _descriptionPanel(widget.reminder),
                 SizedBox(height: 20.0),
                 _schedulePanel(),
                 SizedBox(height: 12.0),
-                _confirmationWidget(reminder),
+                _confirmationWidget(widget.reminder),
               ],
             ),
           ),
@@ -173,7 +167,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
           decoration: InputDecoration(
             //icon: Icon(Icons.medication_rounded),
             border: OutlineInputBorder(),
-            hintText: reminder.medicineType.string,
+            //hintText: reminder.medicineType.string,
           ),
           value: _medicineType.string,
           validator: (val) => val != null ? null : 'Select a type',
@@ -210,7 +204,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Medication Type",
+          "Schedule",
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.w700,
@@ -254,6 +248,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 child: _timeRowGenerator(),
               ),
               SizedBox(height: 12.0),
+              /*
               Text(
                 "On days",
                 style: TextStyle(
@@ -267,6 +262,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 child: _daySelector(),
               ),
               SizedBox(height: 12.0),
+               */
               Text(
                 "End date",
                 style: TextStyle(
@@ -342,6 +338,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   }
 
   Widget _timeRowGenerator() {
+    DateTime now = DateTime.now();
     return ListView.separated(
         scrollDirection: Axis.horizontal,
         //shrinkWrap: true,
@@ -357,6 +354,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 format: _format,
                 validator: (val) => val != null ? null : 'Select time',
                 resetIcon: null,
+                initialValue: (_frequencyTiming[index] != null) ? DateTime(now.year, now.month, now.day, _frequencyTiming[index].hour, _frequencyTiming[index].minute) : null,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   filled: true,
@@ -380,7 +378,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
           ]);
         });
   }
-
+  /*
   Widget _daySelector() {
     return MultiSelectChipField(
       items: _daysList,
@@ -405,6 +403,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
       },
     );
   }
+   */
 
   Widget _dateSelector() {
     return DateTimeField(
@@ -473,7 +472,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
           child: Text(
-            'Add Medication Reminder',
+            'Edit Medication Reminder',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
@@ -493,7 +492,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               endDate: _endDate,
               frequency: _frequency,
               frequencyTiming: selectedFrequencies,
-              days: _selectedDaysList,
+              //days: _selectedDaysList,
               description: _description,
             );
             //OfflineDatabaseController offlineDb = OfflineDatabaseController();

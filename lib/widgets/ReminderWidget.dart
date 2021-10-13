@@ -14,7 +14,6 @@ class ReminderWidget extends StatefulWidget {
   final String description;
   final DateTime endDate;
   final int frequency;
-  final List<int> daysList;
   final List<TimeOfDay> timingList;
   final int remainderId;
   @override
@@ -26,7 +25,6 @@ class ReminderWidget extends StatefulWidget {
       this.description,
       this.endDate,
       this.frequency,
-      this.daysList,
       this.timingList,
       this.remainderId);
 }
@@ -129,7 +127,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                                 endDate: widget.endDate,
                                 frequency: widget.frequency,
                                 frequencyTiming: widget.timingList,
-                                days: widget.daysList,
+                                //days: widget.daysList,
                                 description: widget.description,
                               ));
                         },
@@ -193,6 +191,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               ),
                             ),
                             SizedBox(height: 10.0),
+                            /*
                             Text("On days:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -234,6 +233,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               ),
                             ),
                             SizedBox(height: 10.0),
+                             */
                             Text("At times:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -289,10 +289,5 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         ),
       ),
     );
-  }
-
-  int _generateNewId() {
-    Random rng = new Random();
-    return DateTime.now().millisecondsSinceEpoch + rng.nextInt(99);
   }
 }

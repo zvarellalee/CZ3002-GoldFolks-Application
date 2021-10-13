@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/model/UserAccount.dart';
 import 'package:goldfolks/view/Account/EmailVerificationScreen.dart';
 import 'package:goldfolks/view/ExerciseVideo/ExerciseScreen.dart';
@@ -87,7 +88,7 @@ class GoldFolksApp extends StatelessWidget {
 
             // Reminder screen
             ReminderScreen.id: (context) => ReminderScreen(),
-            EditReminderScreen.id: (context) => EditReminderScreen(),
+            //EditReminderScreen.id: (context) => EditReminderScreen(),
 
             SettingsScreen.id: (context) => SettingsScreen(),
           },
@@ -112,6 +113,10 @@ class GoldFolksApp extends StatelessWidget {
                   );
                 },
               );
+            } else if(settings.name == EditReminderScreen.id) {
+              Reminder reminder = settings.arguments;
+              return MaterialPageRoute(
+                  builder: (_) => EditReminderScreen(reminder: reminder,));
             }
             //          else if (settings.name == EditReminderScreen.id) {
             //   return PageRouteBuilder(

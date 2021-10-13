@@ -50,7 +50,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                   document['description'],
                   DateTime.parse(document['endDate']),
                   document['frequency'],
-                  new List<int>.from(document['days']),
+                  //new List<int>.from(document['days']),
                   new List<String>.from(document['frequencyTiming'])
                       .map((e) => Reminder.stringToTimeOfDay(e))
                       .toList(),

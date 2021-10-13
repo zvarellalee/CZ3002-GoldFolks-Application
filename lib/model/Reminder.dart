@@ -8,7 +8,7 @@ class Reminder {
   DateTime _endDate;    // end date TODO: do we need start date to?
   int _frequency;       // how many times a day TODO: do we need this? (since it is implied by num frequency timings
   List<TimeOfDay> _frequencyTiming;  // what timings to send the reminder at (on selected days)
-  List<int> _days;   // on what days to send the reminders
+  //List<int> _days;   // on what days to send the reminders
   String _description;  // user input description
 
   Reminder({
@@ -18,7 +18,7 @@ class Reminder {
     DateTime endDate,
     int frequency,
     List<TimeOfDay> frequencyTiming,
-    List<int> days,
+    //List<int> days,
     String description,
   }) {
     //frequencyTiming.sort((a,b) => (a.hour + a.minute/60.0).compareTo(b.hour + b.minute/60.0));
@@ -28,7 +28,7 @@ class Reminder {
     _endDate = endDate;
     _frequency = frequency;
     _frequencyTiming = frequencyTiming;
-    _days = days;
+    //_days = days;
     _description = description;
   }
 
@@ -38,7 +38,7 @@ class Reminder {
   DateTime get endDate => _endDate;
   int get frequency => _frequency;
   List<TimeOfDay> get frequencyTiming => _frequencyTiming;
-  List<int> get days => _days;
+  //List<int> get days => _days;
   String get description => _description;
 
   set reminderId(int reminderId) => _reminderId = reminderId;
@@ -47,7 +47,7 @@ class Reminder {
   set endDate(DateTime endDate) => _endDate = endDate;
   set frequency(int frequency) => _frequency = frequency;
   set frequencyTiming(List<TimeOfDay> frequencyTiming) => _frequencyTiming = frequencyTiming;
-  set days(List<int> days) => _days = days;
+  //set days(List<int> days) => _days = days;
   set description(String description) => _description = description;
 
   Map<String, dynamic> toJson() => {
@@ -57,7 +57,7 @@ class Reminder {
     "endDate":_endDate.toIso8601String(),
     "frequency":_frequency,
     "frequencyTiming":_frequencyTiming.map((e) => _TimeOfDayToString(e)).toList(),
-    "days":_days,
+    //"days":_days,
     "description":_description,
   };
 
@@ -78,7 +78,7 @@ class Reminder {
       endDate: DateTime.parse(json["endDate"]),
       frequency: json["frequency"],
       frequencyTiming: new List<String>.from(json["frequencyTiming"]).map((String e) => stringToTimeOfDay(e)).toList(),
-      days: new List<int>.from(json["days"]),
+      //days: new List<int>.from(json["days"]),
       description: json["description"],
     );
   }
