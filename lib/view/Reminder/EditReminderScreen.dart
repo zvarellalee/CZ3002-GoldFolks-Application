@@ -39,17 +39,37 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    Reminder reminder = ModalRoute.of(context).settings.arguments;
+
     _loadDaysList();
     super.initState();
+
     //localNotificationManager.setOnNotificationClick(onNotificationClick);
-    _medicineName = reminder.medicineName;
-    _description = reminder.description;
-    _frequency = reminder.frequency;
-    _frequencyTiming = reminder.frequencyTiming;
-    _selectedDaysList = reminder.days;
-    _endDate = reminder.endDate;
-    _medicineType = reminder.medicineType;
+
+    Future.delayed(Duration.zero, () {
+      Reminder reminder = ModalRoute.of(context).settings.arguments;
+      _medicineName = reminder.medicineName;
+      _description = reminder.description;
+      _frequency = reminder.frequency;
+      _frequencyTiming = reminder.frequencyTiming;
+      _selectedDaysList = reminder.days;
+      _endDate = reminder.endDate;
+      _medicineType = reminder.medicineType;
+
+      switch (_frequency) {
+        case 1:
+          _frequencyString = "Once a day";
+          break;
+        case 2:
+          _frequencyString = "Twice a day";
+          break;
+        case 3:
+          _frequencyString = "Three times a day";
+          break;
+        case 4:
+          _frequencyString = "Four times a day";
+          break;
+      }
+    });
   }
 
   _loadDaysList() {
@@ -398,6 +418,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         hintText: 'End date',
         contentPadding: EdgeInsets.all(10),
       ),
+      initialValue: _endDate,
       textAlign: TextAlign.center,
       onShowPicker: (context, currentValue) async {
         final date = await showDatePicker(

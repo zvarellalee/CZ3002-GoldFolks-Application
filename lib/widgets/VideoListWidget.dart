@@ -6,6 +6,7 @@ class VideoListWidget extends StatefulWidget {
   final String id;
 
   VideoListWidget(this.id);
+
   @override
   _VideoListWidgetState createState() => _VideoListWidgetState();
 }
@@ -80,14 +81,11 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                       Size(double.infinity, 30),
                     )),
                 onPressed: () => Navigator.pushNamed(
-                  context,
-                  VideoPlayerScreen.id,
-                  arguments: {'videoId':widget.id}
-                  ),
-                ),
+                    context, VideoPlayerScreen.id,
+                    arguments: {'videoId': widget.id}),
               ),
-            );
-          }
-        );
+            ),
+          );
+        });
   }
 }
