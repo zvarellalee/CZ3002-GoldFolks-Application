@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
-import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/widgets/ReminderWidget.dart';
 
@@ -45,16 +44,17 @@ class _ReminderScreenState extends State<ReminderScreen> {
               shrinkWrap: true,
               children: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new ReminderWidget(
-                  document['medicineName'],
-                  StringToEnum.toEnum(document['medicineType']),
-                  document['description'],
-                  DateTime.parse(document['endDate']),
-                  document['frequency'],
+                  Reminder.fromJson(document.data())
+                  //document['medicineName'],
+                  //StringToEnum.toEnum(document['medicineType']),
+                  //document['description'],
+                  //DateTime.parse(document['endDate']),
+                  //document['frequency'],
                   //new List<int>.from(document['days']),
-                  new List<String>.from(document['frequencyTiming'])
-                      .map((e) => Reminder.stringToTimeOfDay(e))
-                      .toList(),
-                  document['reminderId'],
+                  //new List<String>.from(document['frequencyTiming'])
+                  //    .map((e) => Reminder.stringToTimeOfDay(e))
+                   //   .toList(),
+                  //document['reminderId'],
                 );
               }).toList(),
             );

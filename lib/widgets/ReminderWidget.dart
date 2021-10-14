@@ -1,7 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicationIcons.dart';
 import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
@@ -9,31 +9,33 @@ import 'package:goldfolks/view/Reminder/EditReminderScreen.dart';
 import 'package:intl/intl.dart';
 
 class ReminderWidget extends StatefulWidget {
-  final String medicineName;
-  final MedicineType medicineType;
-  final String description;
-  final DateTime endDate;
-  final int frequency;
-  final List<TimeOfDay> timingList;
-  final int remainderId;
+  //final String medicineName;
+  //final MedicineType medicineType;
+  //final String description;
+  //final DateTime endDate;
+  //final int frequency;
+  //final List<TimeOfDay> timingList;
+  //final int remainderId;
+  final Reminder reminder;
   @override
   _ReminderWidgetState createState() => _ReminderWidgetState();
 
   ReminderWidget(
-      this.medicineName,
-      this.medicineType,
-      this.description,
-      this.endDate,
-      this.frequency,
-      this.timingList,
-      this.remainderId);
+      //this.medicineName,
+     // this.medicineType,
+      //this.description,
+      //this.endDate,
+      //this.frequency,
+      //this.timingList,
+      //this.remainderId
+    this.reminder);
 }
 
 class _ReminderWidgetState extends State<ReminderWidget> {
   DateFormat format = DateFormat('dd MMM, yyyy');
   Widget icon(double size) {
     IconData data;
-    switch (widget.medicineType) {
+    switch (widget.reminder.medicineType) {
       case MedicineType.Liquid:
         data = MedicationIcon.local_drink;
         break;
@@ -79,7 +81,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
   @override
   Widget build(BuildContext context) {
     String timings = "at ";
-    widget.timingList.forEach((e) => timings = timings +
+    widget.reminder.frequencyTiming.forEach((e) => timings = timings +
         "${e.hour.toString().padLeft(2, '0')}:${e.minute.toString().padLeft(2, '0')}, ");
     timings = timings.substring(0, timings.length - 2);
     return Padding(
@@ -97,7 +99,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.medicineName,
+                        widget.reminder.medicineName,
                         style: TextStyle(
                           fontSize: 15.0,
                         ),
@@ -110,28 +112,44 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                         ),
                       ),
                       SizedBox(height: 5.0),
-                      TextButton(
-                        child: Text(
-                          'Edit',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            color: Color(0xFF1976D2),
+                      Row(
+                        children: [
+                          TextButton(
+                            child: Text(
+                              'Edit',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Color(0xFF1976D2),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.pushNamed(context, EditReminderScreen.id,
+                                  arguments: Reminder(
+                                    reminderId: widget.reminder.reminderId,
+                                    medicineName: widget.reminder.medicineName,
+                                    medicineType: widget.reminder.medicineType,
+                                    endDate: widget.reminder.endDate,
+                                    frequency: widget.reminder.frequency,
+                                    frequencyTiming: widget.reminder.frequencyTiming,
+                                    //days: widget.daysList,
+                                    description: widget.reminder.description,
+                                  ));
+                            },
                           ),
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, EditReminderScreen.id,
-                              arguments: Reminder(
-                                reminderId: widget.remainderId,
-                                medicineName: widget.medicineName,
-                                medicineType: widget.medicineType,
-                                endDate: widget.endDate,
-                                frequency: widget.frequency,
-                                frequencyTiming: widget.timingList,
-                                //days: widget.daysList,
-                                description: widget.description,
-                              ));
-                        },
-                      )
+                          TextButton(
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.red,
+                              ),
+                            ),
+                            onPressed: () {
+                              showAlertDialog(context);
+                            },
+                          )
+                        ],
+                      ),
                     ]),
               ),
               Expanded(
@@ -146,7 +164,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
           onTap: () => showDialog(
               context: context,
               builder: (_) => AlertDialog(
-                    title: Text(widget.medicineName),
+                    title: Text(widget.reminder.medicineName),
                     content: ConstrainedBox(
                       constraints: BoxConstraints(
                         minHeight: 100.0,
@@ -162,7 +180,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                                       fontWeight: FontWeight.bold,
                                     )),
                                 Text(
-                                  widget.medicineType.string,
+                                  widget.reminder.medicineType.string,
                                 ),
                                 SizedBox(width: 5.0),
                                 Container(
@@ -187,7 +205,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: Text(widget.description),
+                                child: Text(widget.reminder.description),
                               ),
                             ),
                             SizedBox(height: 10.0),
@@ -244,7 +262,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               width: 500.0,
                               child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: widget.timingList.length,
+                                itemCount: widget.reminder.frequencyTiming.length,
                                 itemBuilder: (context, index) {
                                   return Container(
                                     //height: 40.0,
@@ -258,7 +276,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                                     child: Padding(
                                       padding: EdgeInsets.all(5.0),
                                       child: Text(
-                                        "${widget.timingList[index].hour.toString().padLeft(2, '0')}:${widget.timingList[index].minute.toString().padLeft(2, '0')}",
+                                        "${widget.reminder.frequencyTiming[index].hour.toString().padLeft(2, '0')}:${widget.reminder.frequencyTiming[index].minute.toString().padLeft(2, '0')}",
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -277,7 +295,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                                     fontWeight: FontWeight.bold,
                                   )),
                               Text(
-                                "${format.format(widget.endDate)}",
+                                "${format.format(widget.reminder.endDate)}",
                               ),
                             ]),
                             SizedBox(height: 10.0),
@@ -288,6 +306,40 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                   )),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes"),
+      onPressed:  () async {
+        Navigator.of(context).pop();
+        DatabaseController db = DatabaseController();
+        await db.deleteReminder(UserAccountController.userDetails.name, widget.reminder);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content: Text("Delete this medication reminder?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
