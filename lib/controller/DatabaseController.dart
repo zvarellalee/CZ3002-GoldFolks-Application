@@ -155,14 +155,10 @@ class DatabaseController {
 
   /// Function for updating selected reminder
   Future updateReminder(String name, Reminder reminder) async {
-    await userCollection
-        .where("remainderId", isEqualTo: reminder.reminderId.toString())
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        userCollection.doc(element.id).update(reminder.toJson());
-      });
-    });
+    print(reminder.toJson());
+    await userCollection.doc(name).collection('Reminders')
+        .doc(reminder.reminderId.toString())
+        .update(reminder.toJson());
   }
 
   /// Function for adding a list of reminders
