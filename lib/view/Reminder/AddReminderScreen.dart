@@ -41,7 +41,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   void sendNotification(Reminder reminderInfo) async {
     await localNotificationManager.showDailyAtTimeNotification(reminderInfo);
-    Navigator.pop(context);
   }
 
   onNotificationClick(String payload) {
