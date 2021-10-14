@@ -52,7 +52,7 @@ class LocalNotificationController {
     TimeOfDay time = reminderInfo.frequencyTiming[0];
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
+        reminderInfo.reminderId,
         name,
         description,
         _nextInstanceOfTime(
@@ -65,6 +65,43 @@ class LocalNotificationController {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+  }
+
+  Future<void> deleteReminderNotification(Reminder reminderInfo) async {
+    int id = reminderInfo.reminderId;
+    try {
+      await flutterLocalNotificationsPlugin.cancel(id);
+    } catch (e) {
+      print("Notification doesn't exist");
+    };
+  }
+
+  Future<void> editReminderNotificaiton(Reminder reminderInfo) async {
+    int id = reminderInfo.reminderId;
+    try {
+      await flutterLocalNotificationsPlugin.cancel(id);
+    } catch (e) {
+      print("Notification doesn't exist, adding new notification");
+    };
+    String name = reminderInfo.medicineName;
+    String description = reminderInfo.description;
+    TimeOfDay time = reminderInfo.frequencyTiming[0];
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        reminderInfo.reminderId,
+        name,
+        description,
+        _nextInstanceOfTime(
+            DateTime(now.year, now.month, now.day, time.hour, time.minute)),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'GoldFolks Notification', 'GoldFolks Notification',
+              channelDescription: 'GoldFolks Notification Channel'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
   }
 
