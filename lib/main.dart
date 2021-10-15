@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
 import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
 class GoldFolksApp extends StatelessWidget {
   // This widget is the root of your application.
   // TODO: connect to login screen on startup (only for the first time)
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserAccount>.value(
@@ -113,10 +115,12 @@ class GoldFolksApp extends StatelessWidget {
                   );
                 },
               );
-            } else if(settings.name == EditReminderScreen.id) {
+            } else if (settings.name == EditReminderScreen.id) {
               Reminder reminder = settings.arguments;
               return MaterialPageRoute(
-                  builder: (_) => EditReminderScreen(reminder: reminder,));
+                  builder: (_) => EditReminderScreen(
+                        reminder: reminder,
+                      ));
             }
             //          else if (settings.name == EditReminderScreen.id) {
             //   return PageRouteBuilder(
