@@ -11,7 +11,7 @@ class VideoDetailFetcher {
       } else {
         return null;
       }
-    } catch (Exception) {
+    } catch (e) {
       print("Error in format");
     }
   }

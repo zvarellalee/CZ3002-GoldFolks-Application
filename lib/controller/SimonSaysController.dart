@@ -23,7 +23,7 @@ class SimonSaysController {
   static int _score;
   static final DatabaseController db = DatabaseController();
 
-  static List<int> _addNextMove() {
+  static void _addNextMove() {
     _sequence.add(_rng.nextInt(_numSquares));
   }
 
@@ -55,7 +55,7 @@ class SimonSaysController {
     _scoreAndLivesStream.add([-1, _score]); // -1 signifies end of game.
   }
 
-  static bool checkMove(int index) {
+  static void checkMove(int index) {
     if (_canPlay) {
       if (_sequence[_playIndex] == index) {
         _playIndex++;

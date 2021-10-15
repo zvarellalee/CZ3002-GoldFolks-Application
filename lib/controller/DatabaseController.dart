@@ -155,7 +155,6 @@ class DatabaseController {
 
   /// Function for updating selected reminder
   Future updateReminder(String name, Reminder reminder) async {
-    print(reminder.toJson());
     await userCollection.doc(name).collection('Reminders')
         .doc(reminder.reminderId.toString())
         .update(reminder.toJson());

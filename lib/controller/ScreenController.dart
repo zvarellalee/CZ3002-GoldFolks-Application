@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/UserAccount.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
-import 'package:goldfolks/view/LoadingScreen.dart';
 import 'package:goldfolks/view/WelcomeScreen.dart';
 import 'package:provider/provider.dart';
 
