@@ -1,16 +1,34 @@
-# goldfolks
+# GoldFolks
 
-All-in-one application for the elderly.
+## Overview
+
+GoldFolks is an all-in-one mobile application addressing common needs for the elderly. 
+
+Main Features:
+- Medication reminder system
+- Play games like Mental Math and Simon Says to improve cognitive ability
+- Exercise videos for different categories of exercise
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter
+- Android Studio
+- Android Emulator/Android Device
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Built with
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Flutter](https://flutter.dev/)
+- [Firebase](https://firebase.google.com/)
+- [Awesome Notifications](https://pub.dev/packages/awesome_notifications)
+- [Youtube Player IFrame](https://pub.dev/packages/youtube_player_iframe)
+
+## Authors
+- [Ankitha Anil](https://github.com/ankitha-anil)
+- [Zachary Varella Lee](https://github.com/zvarellalee)
+- [Ng Chi Hui](https://github.com/Chihui8199)
+- [Lionel Wong Zhi Neng](https://github.com/lwong020)
+- [Low Jin Teng Jackson](https://github.com/jlow072)
+- [Chong Yow Lim](https://github.com/ychong032)
+- [Chan Shao Jing](https://github.com/shaojingle)
