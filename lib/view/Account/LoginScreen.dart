@@ -2,6 +2,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/model/Reminder.dart';
 import 'package:goldfolks/view/Account/EmailVerificationScreen.dart';
 import 'package:goldfolks/view/Account/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
@@ -131,6 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 email, password);
                                         if (emailCheck) {
                                           if (result != null) {
+                                            List<Reminder> reminderList = await _auth.getReminders(UserAccountController.userDetails.name);
+                                            NotificationController.scheduleAllNotifications(reminderList);
                                             Navigator.pushNamed(
                                                 context, HomeScreen.id);
                                           }

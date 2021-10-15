@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/view/ExerciseVideo/ExerciseScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:goldfolks/view/SettingsScreen.dart';
 
-
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
-  //static String name = UserAccountController.userDetails.name;
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    NotificationController.tryListen();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -16,46 +26,46 @@ class HomeScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
             body: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                color: Colors.black12,
-                constraints: BoxConstraints.expand(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // TODO: Select name from user account
-                    Text(
-                      "Welcome, ${UserAccountController.userDetails.name}",
-                      textScaleFactor: 1.5,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    color: Colors.black12,
+                    constraints: BoxConstraints.expand(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // TODO: Select name from user account
+                        Text(
+                          "Welcome, ${UserAccountController.userDetails.name}",
+                          textScaleFactor: 1.5,
+                        ),
+                        Text(
+                          "What would you like to do today?",
+                          textScaleFactor: 1,
+                        ),
+                      ],
                     ),
-                    Text(
-                      "What would you like to do today?",
-                      textScaleFactor: 1,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 7,
-              child: Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(30.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      RemindersButton(context),
-                      GameButton(context),
-                      ExerciseButton(context),
-                      SettingsButton(context),
-                    ],
-                  )),
-            ),
-          ],
-        )),
+                Expanded(
+                  flex: 7,
+                  child: Container(
+                      color: Colors.white,
+                      padding: const EdgeInsets.all(30.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          RemindersButton(context),
+                          GameButton(context),
+                          ExerciseButton(context),
+                          SettingsButton(context),
+                        ],
+                      )),
+                ),
+              ],
+            )),
       ),
     );
   }

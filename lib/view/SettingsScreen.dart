@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
 import 'package:goldfolks/controller/ScreenController.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -42,6 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
               onPressed: () async {
+                await NotificationController.cancelAllNotifications(); // cancel all notifications on log out.
                 await _auth.signOut();
                 Navigator.popUntil(
                     context, ModalRoute.withName(ScreenController.id));

@@ -1,8 +1,9 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
 import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/Reminder.dart';
@@ -29,12 +30,25 @@ import 'package:goldfolks/view/SimonSaysGame/SimonSaysTutorialScreen.dart';
 import 'package:goldfolks/view/ExerciseVideo/VideoPlayerScreen.dart';
 import 'package:goldfolks/view/WelcomeScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  tz.initializeTimeZones();
+  // initialize firebase
   await Firebase.initializeApp();
+  // initialize notification channel
+  AwesomeNotifications().initialize(
+    'resource://drawable/notification_bell',
+    [
+      NotificationChannel(
+        channelKey: 'scheduled_channel',
+        channelName: 'Scheduled Notifications',
+        defaultColor: Colors.teal,
+        locked: true,
+        importance: NotificationImportance.High,
+        soundSource: 'resource://raw/res_custom_notification',
+      ),
+    ],
+  );
   // lock rotation
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
