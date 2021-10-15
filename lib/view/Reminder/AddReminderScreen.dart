@@ -4,16 +4,11 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/controller/LocalNotificationController.dart';
 import 'package:goldfolks/controller/NotificationController.dart';
-import 'package:goldfolks/controller/ScreenController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
-import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class AddReminderScreen extends StatefulWidget {
   static String id = "AddReminderScreen";
@@ -31,25 +26,26 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   String _frequencyString;
   int _frequency = 1;
   List<TimeOfDay> _frequencyTiming;
-  //List<int> _selectedDaysList;
+  List<int> _notificationIds;
   DateTime _endDate;
   //List<MultiSelectItem<int>> _daysList;
   MedicineType _medicineType;
 
-  final Notifications _notifications = Notifications();
+  //final Notifications _notifications = Notifications();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+  //final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
 
   @override
   void initState() {
     //_loadDaysList();
     super.initState();
-    initNotifies();
+    //initNotifies();
     _frequencyTiming = List.filled(4, TimeOfDay.now());
+    _notificationIds = _generateNotiIDs(4);
   }
 
-  Future initNotifies() async => flutterLocalNotificationsPlugin =
-      await _notifications.initNotifies(context);
+  //Future initNotifies() async => flutterLocalNotificationsPlugin =
+  //    await _notifications.initNotifies(context);
 
   /*
   _loadDaysList() {
@@ -469,6 +465,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             int id = _generateNewId();
             Reminder newReminder = new Reminder(
               reminderId: id,
+              notificationIds: _notificationIds,
               medicineName: _medicineName,
               medicineType: _medicineType,
               endDate: _endDate,
@@ -482,31 +479,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             String name = UserAccountController.userDetails.name;
             DatabaseController db = DatabaseController();
             await db.addReminder(name, newReminder);
-
-            tz.initializeTimeZones();
-            tz.setLocalLocation(tz.getLocation('Europe/Warsaw'));
-
-            for (int i = 0; i < _frequency; i++) {
-              TimeOfDay setTime = selectedFrequencies[i];
-              DateTime time = DateTime(
-                  now.year, now.month, now.day, setTime.hour, setTime.minute);
-
-              while (time.isBefore(_endDate.add(Duration(days: 1)))) {
-                await _notifications.showNotification(
-                    _medicineName,
-                    _description,
-                    _setTime(time),
-                    id,
-                    flutterLocalNotificationsPlugin);
-
-                print(
-                    "Set notif ${time.hour}:${time.minute} on day: ${time.day}");
-                time = time.add(Duration(days: 1));
-              }
-              print(
-                  " next endate ${_endDate.day} < time ${time.day} of time ${time.hour}:${time.minute}");
-            }
-
+            await NotificationController.createDailyNotifications(newReminder);
             Navigator.pop(context);
           }
         });
@@ -514,12 +487,22 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   int _generateNewId() {
     Random rng = new Random();
-    return (DateTime.now().millisecondsSinceEpoch * 0.001 + rng.nextInt(99))
+    return (DateTime.now().millisecondsSinceEpoch + rng.nextInt(99))
         .toInt();
   }
 
-  int _setTime(DateTime setDate) {
-    return setDate.millisecondsSinceEpoch -
-        tz.TZDateTime.now(tz.local).millisecondsSinceEpoch;
+  List<int> _generateNotiIDs(int n) {
+    var rng = Random();
+    List<int> ids = [];
+    int oldId = -1;
+    int newId = -1;
+    for (int i = 0; i < n; i++) {
+      do {
+        newId = rng.nextInt(1000000000);
+      } while (oldId == newId);
+      ids.add(newId);
+      newId = oldId;
+    }
+    return ids;
   }
 }

@@ -1,13 +1,10 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
-import 'package:goldfolks/controller/LocalNotificationController.dart';
-import 'package:goldfolks/controller/ScreenController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicineType.dart';
 import 'package:goldfolks/model/Reminder.dart';
-import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 import 'package:intl/intl.dart';
 
 class EditReminderScreen extends StatefulWidget {
@@ -29,15 +26,12 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   String _description;
   String _frequencyString;
   int _frequency = 1;
+  int _oldFrequency;
   List<TimeOfDay> _frequencyTiming;
   //List<int> _selectedDaysList;
   DateTime _endDate;
   //List<MultiSelectItem<int>> _daysList;
   MedicineType _medicineType;
-
-  final LocalNotificationController _notifications =
-      LocalNotificationController();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
   @override
   void initState() {
@@ -51,11 +45,11 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     _medicineName = widget.reminder.medicineName;
     _description = widget.reminder.description;
     _frequency = widget.reminder.frequency;
+    _oldFrequency = widget.reminder.frequency;
     _frequencyTiming = List.filled(4, TimeOfDay.now());
     for (int i = 0; i < widget.reminder.frequencyTiming.length; i++) {
       _frequencyTiming[i] = widget.reminder.frequencyTiming[i];
     }
-    //_frequencyTiming = widget.reminder.frequencyTiming;
     //_selectedDaysList = reminder.days;
     _endDate = widget.reminder.endDate;
     _medicineType = widget.reminder.medicineType;
@@ -76,27 +70,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     }
     //});
     super.initState();
-    initNotifies();
   }
 
-  Future initNotifies() async => flutterLocalNotificationsPlugin =
-      await _notifications.initNotifies(context);
-  /*
-  _loadDaysList() {
-    _daysList = [];
-    _selectedDaysList = [];
-
-    _daysList.add(MultiSelectItem(0, "Mon"));
-    _daysList.add(MultiSelectItem(1, "Tue"));
-    _daysList.add(MultiSelectItem(2, "Wed"));
-    _daysList.add(MultiSelectItem(3, "Thu"));
-    _daysList.add(MultiSelectItem(4, "Fri"));
-    _daysList.add(MultiSelectItem(5, "Sat"));
-    _daysList.add(MultiSelectItem(6, "Sun"));
-
-    _frequencyTiming = List.filled(4, TimeOfDay.now());
-  }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -509,6 +484,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
             });
             Reminder newReminder = new Reminder(
               reminderId: reminder.reminderId,
+              notificationIds: reminder.notificationIds,
               medicineName: _medicineName,
               medicineType: _medicineType,
               endDate: _endDate,
@@ -521,9 +497,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
             //await offlineDb.createReminder(newReminder);
             String name = UserAccountController.userDetails.name;
             DatabaseController db = DatabaseController();
-            _notifications.editReminderNotification(
-                newReminder, flutterLocalNotificationsPlugin);
             await db.updateReminder(name, newReminder);
+            await NotificationController.changeDailyNotifications(newReminder, _oldFrequency);
             Navigator.pop(context);
           }
         });

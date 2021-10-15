@@ -38,7 +38,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) return new Text('Loading...');
+            if (!snapshot.hasData) return Center(child: SizedBox(width:100, height: 100, child: CircularProgressIndicator(color: Colors.lightBlueAccent)));
             return new ListView(
               padding: EdgeInsets.all(10),
               shrinkWrap: true,

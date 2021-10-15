@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
 import 'package:goldfolks/controller/UserAccountController.dart';
 import 'package:goldfolks/model/MedicationIcons.dart';
 import 'package:goldfolks/model/MedicineType.dart';
@@ -124,16 +125,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                             ),
                             onPressed: () {
                               Navigator.pushNamed(context, EditReminderScreen.id,
-                                  arguments: Reminder(
-                                    reminderId: widget.reminder.reminderId,
-                                    medicineName: widget.reminder.medicineName,
-                                    medicineType: widget.reminder.medicineType,
-                                    endDate: widget.reminder.endDate,
-                                    frequency: widget.reminder.frequency,
-                                    frequencyTiming: widget.reminder.frequencyTiming,
-                                    //days: widget.daysList,
-                                    description: widget.reminder.description,
-                                  ));
+                                  arguments: widget.reminder);
                             },
                           ),
                           TextButton(
@@ -322,6 +314,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         Navigator.of(context).pop();
         DatabaseController db = DatabaseController();
         await db.deleteReminder(UserAccountController.userDetails.name, widget.reminder);
+        await NotificationController.cancelScheduledNotifications(widget.reminder);
       },
     );
 
