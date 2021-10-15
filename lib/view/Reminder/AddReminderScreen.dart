@@ -37,6 +37,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     //_loadDaysList();
     super.initState();
     localNotificationManager.setOnNotificationClick(onNotificationClick);
+    _frequencyTiming = List.filled(4, TimeOfDay.now());
   }
 
   void sendNotification(Reminder reminderInfo) async {
@@ -65,7 +66,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _frequencyTiming = List.filled(4, TimeOfDay.now());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -485,6 +485,6 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   int _generateNewId() {
     Random rng = new Random();
-    return DateTime.now().millisecondsSinceEpoch + rng.nextInt(99);
+    return (DateTime.now().millisecondsSinceEpoch*0.001 + rng.nextInt(99)).toInt();
   }
 }

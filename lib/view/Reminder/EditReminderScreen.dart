@@ -43,7 +43,11 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
       _medicineName = widget.reminder.medicineName;
       _description = widget.reminder.description;
       _frequency = widget.reminder.frequency;
-      _frequencyTiming = widget.reminder.frequencyTiming;
+      _frequencyTiming = List.filled(4, TimeOfDay.now());
+      for (int i =0; i<widget.reminder.frequencyTiming.length;i++) {
+        _frequencyTiming[i] = widget.reminder.frequencyTiming[i];
+      }
+      //_frequencyTiming = widget.reminder.frequencyTiming;
       //_selectedDaysList = reminder.days;
       _endDate = widget.reminder.endDate;
       _medicineType = widget.reminder.medicineType;
