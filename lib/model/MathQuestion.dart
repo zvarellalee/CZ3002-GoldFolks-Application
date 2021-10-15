@@ -48,10 +48,6 @@ class MathQuestion {
   double get answerDouble => _answer;
   int get score => _score;
 
-  int calcAnswer() {
-
-  }
-
   String getEquation() {
     String op;
     switch (_operator) {

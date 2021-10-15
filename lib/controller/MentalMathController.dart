@@ -2,9 +2,6 @@ import 'dart:math';
 
 import 'package:goldfolks/model/AnswerScorePair.dart';
 import 'package:goldfolks/model/MathQuestion.dart';
-import 'package:goldfolks/model/UserAccount.dart';
-
-import 'DatabaseController.dart';
 
 class MentalMathController {
   static int _maxValue = 21; // max value for math question operands
@@ -46,7 +43,6 @@ class MentalMathController {
     int answer, minR, maxR;
     double gen;
     answer = question.answerInt;
-    double dAnswer = question.answerDouble;
     minR = answer-_range; // TODO: if including negative answers...
     maxR = (answer+_range).abs();
     choiceList.add(new AnswerScorePair(answer: question.answerDouble, score: question.score,));
