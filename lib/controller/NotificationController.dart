@@ -82,7 +82,7 @@ class NotificationController {
   static Future<void> checkDateToCancel(Map<String, String> payload) async {
     DateTime endDate = DateTime.parse(payload["endDate"]);
     if (endDate.compareTo(DateTime.now()) <= 0) {
-      print("now");
+      //print("now");
       TimeOfDay t = Reminder.stringToTimeOfDay(payload["lastTiming"]);
       DateTime lastTiming = DateTime(endDate.year, endDate.month, endDate.day, t.hour, t.minute);
       if (lastTiming.compareTo(DateTime.now()) <= 0) {

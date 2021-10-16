@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             List<Reminder> reminderList =
                                                 await _auth.getReminders(
                                                     UserAccountController
-                                                        .userDetails.name);
+                                                        .userDetails.email);
                                             NotificationController
                                                 .scheduleAllNotifications(
                                                     reminderList);

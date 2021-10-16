@@ -486,9 +486,9 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
             );
             //OfflineDatabaseController offlineDb = OfflineDatabaseController();
             //await offlineDb.createReminder(newReminder);
-            String name = UserAccountController.userDetails.name;
+            String email = UserAccountController.userDetails.email;
             DatabaseController db = DatabaseController();
-            await db.addReminder(name, newReminder);
+            await db.addReminder(email, newReminder);
             await NotificationController.createDailyNotifications(newReminder);
             Navigator.pop(context);
           }

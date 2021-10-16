@@ -39,7 +39,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
         child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('Users')
-                .doc(UserAccountController.userDetails.name)
+                .doc(UserAccountController.userDetails.email)
                 .collection('Reminders')
                 .snapshots(),
             builder:

@@ -37,10 +37,10 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
       } else {
         // when timer ends
         _timer.cancel();
-        String name = UserAccountController.userDetails.name;
-        await ScreenController.UserCntrlAccount.readUserFromDatabase(name);
+        String email = UserAccountController.userDetails.email;
+        await ScreenController.UserCntrlAccount.readUserFromDatabase(email);
         if (_currScore > UserAccountController.userDetails.MentalMathScore) {
-          await db.updateUserDataMap(name, {"MentalMathScore": _currScore});
+          await db.updateUserDataMap(email, {"MentalMathScore": _currScore});
           UserAccountController.userDetails.MentalMathScore = _currScore;
           _bestScore = _currScore;
         }

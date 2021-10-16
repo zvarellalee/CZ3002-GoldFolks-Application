@@ -37,8 +37,8 @@ class _SimonSaysLeaderboardScreenState
                         height: 80.0,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: (user.name ==
-                                    UserAccountController.userDetails.name)
+                            color: (user.email ==
+                                    UserAccountController.userDetails.email)
                                 ? Color.fromRGBO(199, 236, 255, 100)
                                 : Colors.white,
                             border: Border.all(

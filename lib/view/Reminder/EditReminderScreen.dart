@@ -504,9 +504,9 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
             );
             //OfflineDatabaseController offlineDb = OfflineDatabaseController();
             //await offlineDb.createReminder(newReminder);
-            String name = UserAccountController.userDetails.name;
+            String email = UserAccountController.userDetails.email;
             DatabaseController db = DatabaseController();
-            await db.updateReminder(name, newReminder);
+            await db.updateReminder(email, newReminder);
             await NotificationController.changeDailyNotifications(
                 newReminder, _oldFrequency);
             Navigator.pop(context);

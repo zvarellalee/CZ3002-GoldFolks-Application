@@ -60,7 +60,7 @@ class DatabaseController {
       User user = result.user;
 
       // create a new document for the user with uid
-      await updateUserName(name, result.user);
+      await updateUserName(email, result.user);
       DatabaseController DB = DatabaseController();
       await DB.updateUserData(name, email, 0, 0, []);
       await UserAccountController.populateUser();
@@ -72,7 +72,7 @@ class DatabaseController {
 
   Future updateUserData(String name, String email, int simonSaysScore,
       int mentalMathScore, List<Reminder> reminderList) async {
-    await userCollection.doc(name).set({
+    await userCollection.doc(email).set({
       'Name': name,
       'Email': email,
       'SimonSaysScore': simonSaysScore,
@@ -82,7 +82,7 @@ class DatabaseController {
 
     for (Reminder r in reminderList) {
       await userCollection
-          .doc(name)
+          .doc(email)
           .collection('Reminders')
           .doc(r.reminderId.toString())
           .set(r.toJson());
@@ -90,12 +90,12 @@ class DatabaseController {
   }
 
   Future updateUserDataMap(
-      String name, Map<String, dynamic> parameterMap) async {
-    return await userCollection.doc(name).update(parameterMap);
+      String email, Map<String, dynamic> parameterMap) async {
+    return await userCollection.doc(email).update(parameterMap);
   }
 
-  Future updateUserName(String name, User currentUser) async {
-    await currentUser.updateDisplayName(name);
+  Future updateUserName(String email, User currentUser) async {
+    await currentUser.updateDisplayName(email);
     await currentUser.reload();
   }
 
@@ -129,9 +129,9 @@ class DatabaseController {
 
   //------ Reminders ---------
   /// Function for retrieving the reminder list of a given user.
-  Future<List<Reminder>> getReminders(String name) async {
+  Future<List<Reminder>> getReminders(String email) async {
     var querySnapshot =
-        await userCollection.doc(name).collection('Reminders').get();
+        await userCollection.doc(email).collection('Reminders').get();
     List<Reminder> reminderList = [];
     for (var document in querySnapshot.docs) {
       try {
@@ -145,35 +145,35 @@ class DatabaseController {
   }
 
   /// Function for adding a single new reminder
-  Future addReminder(String name, Reminder reminder) async {
+  Future addReminder(String email, Reminder reminder) async {
     return await userCollection
-        .doc(name)
+        .doc(email)
         .collection('Reminders')
         .doc(reminder.reminderId.toString())
         .set(reminder.toJson());
   }
 
   /// Function for updating selected reminder
-  Future updateReminder(String name, Reminder reminder) async {
-    await userCollection.doc(name).collection('Reminders')
+  Future updateReminder(String email, Reminder reminder) async {
+    await userCollection.doc(email).collection('Reminders')
         .doc(reminder.reminderId.toString())
         .update(reminder.toJson());
   }
 
   /// Function for adding a list of reminders
-  Future addReminderList(String name, List<Reminder> reminderList) async {
+  Future addReminderList(String email, List<Reminder> reminderList) async {
     for (Reminder reminder in reminderList)
       await userCollection
-          .doc(name)
+          .doc(email)
           .collection('Reminders')
           .doc(reminder.reminderId.toString())
           .set(reminder.toJson());
   }
 
   /// Function for deleting a reminder
-  Future deleteReminder(String name, Reminder reminder) async {
+  Future deleteReminder(String email, Reminder reminder) async {
     return await userCollection
-        .doc(name)
+        .doc(email)
         .collection('Reminders')
         .doc(reminder.reminderId.toString())
         .delete();

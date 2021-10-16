@@ -13,29 +13,29 @@ class UserAccountController {
   static DatabaseController _auth = DatabaseController();
 
   static Future populateUser() async {
-    String name = await _auth.getCurrentUserName();
-    if (name != null) {
-      await ScreenController.UserCntrlAccount.readUserFromDatabase(name);
+    String email = await _auth.getCurrentUserName();
+    if (email != null) {
+      await ScreenController.UserCntrlAccount.readUserFromDatabase(email);
     } else {
       return;
     }
   }
 
-  Future<void> readUserFromDatabase(String name) async {
+  Future<void> readUserFromDatabase(String email) async {
     var querySnapshot = await userCollection.get();
     var reminderSnapshot =
-        await userCollection.doc(name).collection('Reminders').get();
+        await userCollection.doc(email).collection('Reminders').get();
     for (var document in querySnapshot.docs) {
       List<Reminder> Reminders = [];
-      if (document.id == name) {
+      if (document.id == email) {
         try {
           if (reminderSnapshot != null) {
             for (var reminder in reminderSnapshot.docs) {
               Reminders.add(Reminder.fromJson(reminder.data()));
             }
           }
-          userDetails.name = name;
-          userDetails.email = document['Email'];
+          userDetails.name = document['Name'];
+          userDetails.email = email;
           userDetails.SimonSaysScore = document['SimonSaysScore'];
           //print(document['MentalMathScore']);
           userDetails.MentalMathScore = document['MentalMathScore'];
@@ -57,7 +57,7 @@ class UserAccountController {
       try {
         user.name = document['Name'];
         var reminderSnapshot =
-            await userCollection.doc(user.name).collection('Reminders').get();
+            await userCollection.doc(user.email).collection('Reminders').get();
         if (reminderSnapshot != null) {
           for (var reminder in reminderSnapshot.docs) {
             Reminders.add(Reminder.fromJson(reminder.data()));

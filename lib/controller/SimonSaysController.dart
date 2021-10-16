@@ -46,10 +46,10 @@ class SimonSaysController {
   }
 
   static void endGame() async {
-    String name = UserAccountController.userDetails.name;
-    await ScreenController.UserCntrlAccount.readUserFromDatabase(name);
+    String email = UserAccountController.userDetails.email;
+    await ScreenController.UserCntrlAccount.readUserFromDatabase(email);
     if (_score > UserAccountController.userDetails.SimonSaysScore) {
-      await db.updateUserDataMap(name, {"SimonSaysScore": _score});
+      await db.updateUserDataMap(email, {"SimonSaysScore": _score});
       UserAccountController.userDetails.SimonSaysScore = _score;
     }
     _scoreAndLivesStream.add([-1, _score]); // -1 signifies end of game.

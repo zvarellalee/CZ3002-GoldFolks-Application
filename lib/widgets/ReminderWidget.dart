@@ -204,49 +204,6 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               ),
                             ),
                             SizedBox(height: 10.0),
-                            /*
-                            Text("On days:",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            SizedBox(height: 10.0),
-                            Container(
-                              height: 65.0,
-                              //maxHeight: 65.0,
-                              width: 500.0,
-                              child: GridView.count(
-                                physics: NeverScrollableScrollPhysics(),
-                                crossAxisCount: 5,
-                                shrinkWrap: true,
-                                childAspectRatio: 45.0 / 25.0,
-                                children: List.generate(
-                                  widget.daysList
-                                      .length, // Replace this with 1, 2 to see min height works.
-                                  (index) => Padding(
-                                    padding: EdgeInsets.all(3.0),
-                                    child: Container(
-                                      height: 25.0,
-                                      width: 45.0,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        shape: BoxShape.rectangle,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8.0)),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Text(
-                                          convertToDay(widget.daysList[index]),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10.0),
-                             */
                             Text("At times:",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -318,7 +275,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         Navigator.of(context).pop();
         DatabaseController db = DatabaseController();
         await db.deleteReminder(
-            UserAccountController.userDetails.name, widget.reminder);
+            UserAccountController.userDetails.email, widget.reminder);
         await NotificationController.cancelScheduledNotifications(
             widget.reminder);
       },
