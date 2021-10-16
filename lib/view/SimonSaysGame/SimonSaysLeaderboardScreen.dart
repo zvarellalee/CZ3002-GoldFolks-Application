@@ -5,23 +5,27 @@ import 'package:goldfolks/model/UserAccount.dart';
 class SimonSaysLeaderboardScreen extends StatefulWidget {
   static String id = "SimonSaysLeaderboardScreen";
   @override
-  _SimonSaysLeaderboardScreenState createState() => _SimonSaysLeaderboardScreenState();
+  _SimonSaysLeaderboardScreenState createState() =>
+      _SimonSaysLeaderboardScreenState();
 }
 
-class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen> {
+class _SimonSaysLeaderboardScreenState
+    extends State<SimonSaysLeaderboardScreen> {
   List<UserAccount> userList;
 
   Widget LeaderboardWidget() {
     return FutureBuilder<List<UserAccount>>(
         future: UserAccountController.getAllUsers("SimonSaysScore"),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<UserAccount>> snapshot) {
+        builder:
+            (BuildContext context, AsyncSnapshot<List<UserAccount>> snapshot) {
           Widget child;
-          if (snapshot.hasData) { // good to go
+          if (snapshot.hasData) {
+            // good to go
             child = ListView.separated(
-                separatorBuilder: (BuildContext context, int index) => const Divider(
-                  color: Colors.black87,
-                ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
+                      color: Colors.black87,
+                    ),
                 padding: const EdgeInsets.all(8),
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
@@ -33,13 +37,15 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
                         height: 80.0,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: (user.name == UserAccountController.userDetails.name) ? Color.fromRGBO(199, 236, 255, 100) : Colors.white,
+                            color: (user.name ==
+                                    UserAccountController.userDetails.name)
+                                ? Color.fromRGBO(199, 236, 255, 100)
+                                : Colors.white,
                             border: Border.all(
                               color: Colors.transparent,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(
-                                20))
-                        ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
                         //margin: const EdgeInsets.all(10.0),
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
@@ -49,32 +55,29 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
                             children: [
                               Expanded(
                                   flex: 1,
-                                  child: Row (
-                                      children: [
-                                        Text(
-                                          "${index+1}",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            //letterSpacing: 6,
-                                            color: Colors.redAccent,
-                                          ),
-                                        ),
-                                        SizedBox(width:20.0),
-                                        Text(
-                                          "${user.name}",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            //letterSpacing: 6,
-                                            color: Colors.black87,
-                                          ),
-                                        ),
-                                      ]
-                                  )
-                              ),
+                                  child: Row(children: [
+                                    Text(
+                                      "${index + 1}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        //letterSpacing: 6,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                    SizedBox(width: 20.0),
+                                    Text(
+                                      "${user.name}",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        //letterSpacing: 6,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ])),
                               Expanded(
                                 flex: 1,
                                 child: Text(
@@ -94,10 +97,10 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
                       ),
                     ],
                   );
-                }
-            );
-          } else if (snapshot.hasError) { // error retrieving
-            child = Column (
+                });
+          } else if (snapshot.hasError) {
+            // error retrieving
+            child = Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -112,8 +115,9 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
                 )
               ],
             );
-          } else { // loading
-            child = Column (
+          } else {
+            // loading
+            child = Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -130,25 +134,28 @@ class _SimonSaysLeaderboardScreenState extends State<SimonSaysLeaderboardScreen>
             );
           }
           return child;
-        }
-    );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black87),
+        leading: TextButton(
+          child: Text(
+            'Back',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey[200],
+            ),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        //foregroundColor: Colors.black87,
+        backgroundColor: Colors.blueAccent,
+        title: Text("Leaderboard"),
         centerTitle: true,
-        title: Text(
-          "Leaderboard",
-          style: TextStyle(color: Colors.black87),
-        ),
-        backgroundColor: Colors.white,//Colors.black26,
         elevation: 0,
       ),
       body: Container(

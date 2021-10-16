@@ -25,124 +25,131 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          //backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+          leading: TextButton(
+            child: Text(
+              'Back',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[200],
+              ),
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
+          backgroundColor: Colors.lightGreen,
+          title: Text("Create Account"),
+          elevation: 0,
+          centerTitle: true,
         ),
-        body: Center(
+        body: SafeArea(
           child: Container(
             child: Stack(children: [
               SingleChildScrollView(
-                child: Center(
-                  child: Container(
-                    child: Form(
-                        key: _formKey,
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              'SignUp Screen',
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Center(
+                              child: SizedBox(
+                                height: 230,
+                                child: Image.asset(
+                                  'images/signup.png',
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Enter your details and create your account!',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                               ),
                             ),
-                            SizedBox(height: 20.0),
-                            TextFormField(
-                                decoration: InputDecoration(
-                                  icon: Icon(Icons.person),
-                                  labelText: 'Name',
-                                ),
-                                validator: (val) =>
-                                    val.isEmpty ? 'Enter your name' : null,
-                                onChanged: (val) {
-                                  setState(() => name = val);
-                                }),
-                            SizedBox(height: 20.0),
-                            TextFormField(
-                              initialValue: email,
+                          ),
+                          TextFormField(
                               decoration: InputDecoration(
-                                enabled: false,
-                                icon: Icon(Icons.email_sharp),
-                                labelText: 'Email',
+                                icon: Icon(Icons.person),
+                                labelText: 'Name',
                               ),
-                              //readOnly: true,
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter your name' : null,
+                              onChanged: (val) {
+                                setState(() => name = val);
+                              }),
+                          SizedBox(height: 20.0),
+                          TextFormField(
+                            initialValue: email,
+                            decoration: InputDecoration(
+                              enabled: false,
+                              icon: Icon(Icons.email_sharp),
+                              labelText: 'Email',
                             ),
-                            SizedBox(height: 20.0),
-                            TextFormField(
-                                decoration: InputDecoration(
-                                  icon: Icon(Icons.vpn_key),
-                                  labelText: 'Password',
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                        _obscureText
-                                            ? Icons.visibility
-                                            : Icons.visibility_off,
-                                        color: Colors.grey[800]),
-                                    onPressed: () {
-                                      setState(() {
-                                        _obscureText = !_obscureText;
-                                      });
-                                    },
-                                  ),
+                            //readOnly: true,
+                          ),
+                          SizedBox(height: 20.0),
+                          TextFormField(
+                              decoration: InputDecoration(
+                                icon: Icon(Icons.vpn_key),
+                                labelText: 'Password',
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                      _obscureText
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.grey[800]),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
                                 ),
-                                validator: (val) => val.isNotEmpty
-                                    ? val.length < 6
-                                        ? 'Enter a password with 6+ characters'
-                                        : null
-                                    : 'Enter password',
-                                obscureText: _obscureText,
-                                onChanged: (val) {
-                                  setState(() => password = val);
-                                }),
-                            SizedBox(height: 30.0),
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.blue),
-                                child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      50.0, 10, 50, 10),
-                                  child: Text('Register',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    setState(() => showSpinner = true);
-                                    await _auth.registerNewUser(
-                                        email, password, name);
-                                    Navigator.pushNamed(context, HomeScreen.id);
-                                  }
-                                  setState(() => showSpinner = false);
-                                }),
-                            TextButton(
-                              child: Text(
-                                "Have an account? Login Here",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, LoginScreen.id);
-                              },
-                            ),
-                          ],
-                        )),
-                  ),
+                              validator: (val) => val.isNotEmpty
+                                  ? val.length < 8
+                                      ? 'Enter a password with 8+ characters'
+                                      : null
+                                  : 'Enter a password',
+                              obscureText: _obscureText,
+                              onChanged: (val) {
+                                setState(() => password = val);
+                              }),
+                          SizedBox(height: 30.0),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                                child: Text('Register',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() => showSpinner = true);
+                                  await _auth.registerNewUser(
+                                      email, password, name);
+                                  Navigator.pushNamed(context, HomeScreen.id);
+                                }
+                                setState(() => showSpinner = false);
+                              }),
+                        ],
+                      )),
                 ),
               ),
               showSpinner
                   ? Center(
                       child: CircularProgressIndicator(
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(Colors.blue),
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            Colors.blueAccent),
                       ),
                     )
                   : SizedBox(),

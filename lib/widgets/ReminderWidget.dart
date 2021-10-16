@@ -23,13 +23,13 @@ class ReminderWidget extends StatefulWidget {
 
   ReminderWidget(
       //this.medicineName,
-     // this.medicineType,
+      // this.medicineType,
       //this.description,
       //this.endDate,
       //this.frequency,
       //this.timingList,
       //this.remainderId
-    this.reminder);
+      this.reminder);
 }
 
 class _ReminderWidgetState extends State<ReminderWidget> {
@@ -86,7 +86,7 @@ class _ReminderWidgetState extends State<ReminderWidget> {
         "${e.hour.toString().padLeft(2, '0')}:${e.minute.toString().padLeft(2, '0')}, ");
     timings = timings.substring(0, timings.length - 2);
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(12),
       child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -102,20 +102,22 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                       Text(
                         widget.reminder.medicineName,
                         style: TextStyle(
-                          fontSize: 15.0,
-                        ),
+                            fontSize: 18.0, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 5.0),
                       Text(
                         timings,
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 16.0,
                         ),
                       ),
                       SizedBox(height: 5.0),
                       Row(
                         children: [
                           TextButton(
+                            // style: TextButton.styleFrom(
+                            //   primary: Colors.black45.withOpacity(0.5),
+                            // ),
                             child: Text(
                               'Edit',
                               style: TextStyle(
@@ -124,7 +126,8 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, EditReminderScreen.id,
+                              Navigator.pushNamed(
+                                  context, EditReminderScreen.id,
                                   arguments: widget.reminder);
                             },
                           ),
@@ -254,7 +257,8 @@ class _ReminderWidgetState extends State<ReminderWidget> {
                               width: 500.0,
                               child: ListView.separated(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: widget.reminder.frequencyTiming.length,
+                                itemCount:
+                                    widget.reminder.frequencyTiming.length,
                                 itemBuilder: (context, index) {
                                   return Container(
                                     //height: 40.0,
@@ -304,23 +308,25 @@ class _ReminderWidgetState extends State<ReminderWidget> {
   showAlertDialog(BuildContext context) {
     Widget cancelButton = TextButton(
       child: Text("No"),
-      onPressed:  () {
+      onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget continueButton = TextButton(
       child: Text("Yes"),
-      onPressed:  () async {
+      onPressed: () async {
         Navigator.of(context).pop();
         DatabaseController db = DatabaseController();
-        await db.deleteReminder(UserAccountController.userDetails.name, widget.reminder);
-        await NotificationController.cancelScheduledNotifications(widget.reminder);
+        await db.deleteReminder(
+            UserAccountController.userDetails.name, widget.reminder);
+        await NotificationController.cancelScheduledNotifications(
+            widget.reminder);
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
-      content: Text("Delete this medication reminder?"),
+      title: Text("Delete Reminder"),
+      content: Text("Are you sure to delete the reminder?"),
       actions: [
         cancelButton,
         continueButton,

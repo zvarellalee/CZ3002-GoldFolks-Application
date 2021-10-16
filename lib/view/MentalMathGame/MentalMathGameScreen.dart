@@ -32,9 +32,10 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
       if (_counter > 0) {
         setState(() {
-          _counter --;
+          _counter--;
         });
-      } else { // when timer ends
+      } else {
+        // when timer ends
         _timer.cancel();
         String name = UserAccountController.userDetails.name;
         await ScreenController.UserCntrlAccount.readUserFromDatabase(name);
@@ -60,10 +61,10 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
 
   void _submitAnswer(int score) {
     _currScore += score;
-    _numQuestions ++;
+    _numQuestions++;
 
     if (score > 0) {
-      _questionsCorrect ++;
+      _questionsCorrect++;
     }
 
     setState(() {
@@ -74,40 +75,39 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
 
   Widget AnswerCorrectWidget() {
     return Expanded(
-      flex: 1,
-      child: Column (
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            "$_questionsCorrect/$_numQuestions",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-              letterSpacing: 2,
-              color: Colors.black,
+        flex: 1,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              "$_questionsCorrect/$_numQuestions",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                letterSpacing: 2,
+                color: Colors.black,
+              ),
             ),
-          ),
-          Text(
-            "questions",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              letterSpacing: 2,
-              color: Colors.black,
+            Text(
+              "questions",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                letterSpacing: 2,
+                color: Colors.black,
+              ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 
   Widget CountdownWidget() {
     return Expanded(
       flex: 1,
-      child: Stack (
+      child: Stack(
         alignment: Alignment.center,
         children: [
           SizedBox(
@@ -116,7 +116,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
             //alignment: Alignment.center,
             child: CircularProgressIndicator(
               strokeWidth: 5.0,
-              value: _counter/_maxTime,
+              value: _counter / _maxTime,
             ),
           ),
           Text(
@@ -137,7 +137,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
   Widget ScoreWidget() {
     return Expanded(
         flex: 1,
-        child: Column (
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -162,8 +162,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 
   Widget AnswerWidget(int index) {
@@ -171,10 +170,10 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
       //margin: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(30.0),
-          ),
-          primary: Colors.lightBlueAccent),
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0),
+            ),
+            primary: Colors.blueAccent),
         child: Text(
           "${_answersList[index].answer.toInt()}",
           style: TextStyle(
@@ -184,7 +183,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
             color: Colors.black,
           ),
         ),
-      onPressed: () => _submitAnswer(_answersList[index].score),
+        onPressed: () => _submitAnswer(_answersList[index].score),
       ),
     );
   }
@@ -197,7 +196,8 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope( // if exit forcefully, stop the timer.
+    return WillPopScope(
+      // if exit forcefully, stop the timer.
       onWillPop: () async {
         setState(() {
           _timer.cancel();
@@ -208,139 +208,141 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
       },
       child: SafeArea(
         child: Scaffold(
-          body: Center (
-            child: _counter > 0 ?
-            Column (
-              children: [
-                Expanded( // score display
-                  flex: 2,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
+          body: Center(
+            child: _counter > 0
+                ? Column(
                     children: [
-                      AnswerCorrectWidget(),
-                      CountdownWidget(),
-                      ScoreWidget(),
+                      Expanded(
+                        // score display
+                        flex: 2,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            AnswerCorrectWidget(),
+                            CountdownWidget(),
+                            ScoreWidget(),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        // question display
+                        flex: 5,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.black12,
+                              border: Border.all(
+                                color: Colors.transparent,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          margin: const EdgeInsets.all(10.0),
+                          child: Text(
+                            "${_mathQuestion.getEquation()}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30,
+                              letterSpacing: 6,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: Container(
+                            color: Colors.white,
+                            margin: const EdgeInsets.all(15.0),
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  AnswerWidget(0),
+                                  AnswerWidget(1),
+                                  AnswerWidget(2),
+                                  AnswerWidget(3),
+                                ])),
+                      ),
                     ],
-                  ),
-                ),
-                Expanded( // question display
-                  flex: 5,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      border: Border.all(
-                        color: Colors.transparent,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(20))
-                    ),
-                    margin: const EdgeInsets.all(10.0),
-                    child: Text(
-                    "${_mathQuestion.getEquation()}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      letterSpacing: 6,
-                      color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Container(
-                    color: Colors.white,
-                    margin: const EdgeInsets.all(15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        AnswerWidget(0),
-                        AnswerWidget(1),
-                        AnswerWidget(2),
-                        AnswerWidget(3),
-                      ]
-                    )
-                  ),
-                ),
-              ],
-            ) :
-            Column (
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  "Your Score: $_currScore",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                    letterSpacing: 2,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                    "Best Score: ${_currScore > _bestScore ? _currScore : _bestScore}",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      letterSpacing: 2,
-                      color: Colors.black,
-                  ),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(40.0, 10, 40, 10),
-                  child: ElevatedButton(
-                    style:
-                    ElevatedButton.styleFrom(primary: Colors.red[300]),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Try Again',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                        Text(
+                          "Your Score: $_currScore",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            letterSpacing: 2,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                    ),
-                    onPressed: () => _startTimer(),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 40.0),
-                  child: ElevatedButton(
-                    style:
-                    ElevatedButton.styleFrom(primary: Colors.red[300]),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Exit',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                        SizedBox(
+                          height: 20.0,
                         ),
-                      ),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-              ]
-            ),
+                        Text(
+                          "Best Score: ${_currScore > _bestScore ? _currScore : _bestScore}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            letterSpacing: 2,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(40.0, 10, 40, 10),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.red[300]),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                              child: Text(
+                                'Try Again',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            onPressed: () => _startTimer(),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 40.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.red[300]),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                              child: Text(
+                                'Exit',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                      ]),
           ),
         ),
       ),

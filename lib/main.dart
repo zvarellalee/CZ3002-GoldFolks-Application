@@ -21,7 +21,6 @@ import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
 import 'package:goldfolks/view/Reminder/AddReminderScreen.dart';
 import 'package:goldfolks/view/Reminder/EditReminderScreen.dart';
 import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
-import 'package:goldfolks/view/SettingsScreen.dart';
 import 'package:goldfolks/view/Account/SignUpScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysGameScreen.dart';
 import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
@@ -105,8 +104,6 @@ class GoldFolksApp extends StatelessWidget {
             // Reminder screen
             ReminderScreen.id: (context) => ReminderScreen(),
             //EditReminderScreen.id: (context) => EditReminderScreen(),
-
-            SettingsScreen.id: (context) => SettingsScreen(),
           },
           onGenerateRoute: (settings) {
             if (settings.name == AddReminderScreen.id) {

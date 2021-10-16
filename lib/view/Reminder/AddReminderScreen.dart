@@ -67,9 +67,19 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black87),
-          onPressed: () => Navigator.of(context).pop(),
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            TextButton(
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Icon(Icons.close, color: Colors.black87),
+                Text('Close',
+                    style: TextStyle(fontSize: 15, color: Colors.black))
+              ]),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            SizedBox(width: 25),
+          ],
         ),
         centerTitle: false,
         backgroundColor: Colors.white, //Colors.black26,
@@ -193,11 +203,11 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
         SizedBox(height: 12.0),
         Container(
           decoration: BoxDecoration(
-            color: Colors.lightGreen[100],
+            color: Color(0xFF3EB16F).withOpacity(0.5),
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             //mainAxisAlignment: MainAxisAlignment.start,
@@ -446,7 +456,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.blue),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+          padding: EdgeInsets.all(20),
           child: Text(
             'Add Medication Reminder',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -487,8 +497,7 @@ class _AddReminderScreenState extends State<AddReminderScreen> {
 
   int _generateNewId() {
     Random rng = new Random();
-    return (DateTime.now().millisecondsSinceEpoch + rng.nextInt(99))
-        .toInt();
+    return (DateTime.now().millisecondsSinceEpoch + rng.nextInt(99)).toInt();
   }
 
   List<int> _generateNotiIDs(int n) {

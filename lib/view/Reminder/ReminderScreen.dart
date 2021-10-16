@@ -18,8 +18,14 @@ class _ReminderScreenState extends State<ReminderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+        leading: TextButton(
+          child: Text(
+            'Back',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey[200],
+            ),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
@@ -31,35 +37,59 @@ class _ReminderScreenState extends State<ReminderScreen> {
         width: double.infinity,
         height: double.infinity,
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('Users')
-              .doc(UserAccountController.userDetails.name)
-              .collection('Reminders')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) return Center(child: SizedBox(width:100, height: 100, child: CircularProgressIndicator(color: Colors.lightBlueAccent)));
-            return new ListView(
-              padding: EdgeInsets.all(10),
-              shrinkWrap: true,
-              children: snapshot.data.docs.map((DocumentSnapshot document) {
-                return new ReminderWidget(
-                  Reminder.fromJson(document.data())
-                  //document['medicineName'],
-                  //StringToEnum.toEnum(document['medicineType']),
-                  //document['description'],
-                  //DateTime.parse(document['endDate']),
-                  //document['frequency'],
-                  //new List<int>.from(document['days']),
-                  //new List<String>.from(document['frequencyTiming'])
-                  //    .map((e) => Reminder.stringToTimeOfDay(e))
-                   //   .toList(),
-                  //document['reminderId'],
+            stream: FirebaseFirestore.instance
+                .collection('Users')
+                .doc(UserAccountController.userDetails.name)
+                .collection('Reminders')
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData)
+                return Center(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: CircularProgressIndicator(
+                      color: Colors.lightBlueAccent,
+                    ),
+                  ),
                 );
-              }).toList(),
-            );
-          },
-        ),
+              else {
+                if (snapshot.data.docs.isEmpty) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'No reminders saved yet',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Text(
+                        'Create Reminders for your medicine by clicking on the button below!',
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  );
+                } else {
+                  return new ListView(
+                    padding: EdgeInsets.all(10),
+                    shrinkWrap: true,
+                    children:
+                        snapshot.data.docs.map((DocumentSnapshot document) {
+                      return new ReminderWidget(
+                          Reminder.fromJson(document.data()));
+                    }).toList(),
+                  );
+                }
+              }
+            }),
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 1, // TODO: flat or shadow?

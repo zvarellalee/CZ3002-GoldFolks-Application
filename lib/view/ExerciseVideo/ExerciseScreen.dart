@@ -35,8 +35,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+        leading: TextButton(
+          child: Text(
+            'Back',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey[200],
+            ),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,

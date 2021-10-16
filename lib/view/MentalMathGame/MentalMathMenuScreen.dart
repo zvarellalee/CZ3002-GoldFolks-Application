@@ -6,6 +6,7 @@ import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
 import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
 
 import 'MentalMathLeaderboardScreen.dart';
+
 class MentalMathMenuScreen extends StatefulWidget {
   static String id = "MentalMathMenuScreen";
   @override
@@ -13,7 +14,6 @@ class MentalMathMenuScreen extends StatefulWidget {
 }
 
 class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
-
   FutureOr _onGoBack(dynamic value) {
     // TODO: get Best Score to update correctly.
     setState(() {});
@@ -25,18 +25,23 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_rounded, color: Colors.black87),
+        leading: TextButton(
+          child: Text(
+            'Back',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey[200],
+            ),
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         //foregroundColor: Colors.black87,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
       body: Container(
@@ -74,76 +79,84 @@ class _MentalMathMenuScreenState extends State<MentalMathMenuScreen> {
                   SizedBox(
                     height: 30.0,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlueAccent,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Play',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blueAccent,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0),
                         ),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                        child: Text(
+                          'Play',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, MentalMathGameScreen.id)
+                              .then(_onGoBack),
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(context, MentalMathGameScreen.id).then(_onGoBack),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlueAccent,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Tutorial',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blueAccent,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0),
                         ),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                        child: Text(
+                          'Tutorial',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pushNamed(
+                          context, MentalMathTutorialScreen.id),
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(
-                            context, MentalMathTutorialScreen.id),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.lightBlueAccent,
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                    ),
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Leaderboard',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blueAccent,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0),
                         ),
                       ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
+                        child: Text(
+                          'Leaderboard',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pushNamed(
+                          context, MentalMathLeaderboardScreen.id),
                     ),
-                    onPressed: () =>
-                        Navigator.pushNamed(
-                            context, MentalMathLeaderboardScreen.id),
                   ),
                   //onPressed:
-                ]
-            ),
+                ]),
           ),
         ),
       ),

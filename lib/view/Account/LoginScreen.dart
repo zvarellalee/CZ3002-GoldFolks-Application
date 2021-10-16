@@ -31,8 +31,20 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            leading: TextButton(
+              child: Text(
+                'Back',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[200],
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: Colors.lightGreen,
+            title: Text("Login"),
             elevation: 0,
+            centerTitle: true,
           ),
           body: Center(
             child: Container(
@@ -40,6 +52,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Center(
+                          child: SizedBox(
+                            height: 210,
+                            child: Image.asset(
+                              'images/login.png',
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(12.0, 8, 12, 4),
                         child: Text(
@@ -134,8 +157,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 email, password);
                                         if (emailCheck) {
                                           if (result != null) {
-                                            List<Reminder> reminderList = await _auth.getReminders(UserAccountController.userDetails.name);
-                                            NotificationController.scheduleAllNotifications(reminderList);
+                                            List<Reminder> reminderList =
+                                                await _auth.getReminders(
+                                                    UserAccountController
+                                                        .userDetails.name);
+                                            NotificationController
+                                                .scheduleAllNotifications(
+                                                    reminderList);
                                             Navigator.pushNamed(
                                                 context, HomeScreen.id);
                                           }
@@ -199,17 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                         }
                                       }
                                     }),
-                                TextButton(
-                                  child: Text("New User? Register Here",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, EmailVerificationScreen.id);
-                                  },
-                                ),
                               ],
                             ),
                           )),
@@ -219,8 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 showSpinner
                     ? Center(
                         child: CircularProgressIndicator(
-                          valueColor:
-                              new AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              Colors.blueAccent),
                         ),
                       )
                     : SizedBox(),

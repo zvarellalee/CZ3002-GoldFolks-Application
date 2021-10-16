@@ -13,66 +13,81 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Container(
-            child: Column(
-              children: [
-                SizedBox(height: 250),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    "Welcome to GoldFolks Application",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+        body: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Center(
+                  child: CircleAvatar(
+                    radius: 70,
+                    backgroundImage: AssetImage('images/GoldFolks logo.png'),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "The best app for elderly assistance",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  "Welcome to GoldFolks Application!",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "The best app for elderly assistance",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.blue),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Sign Up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, EmailVerificationScreen.id);
-                    }),
-                SizedBox(
-                  height: 20,
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.lightGreen,
+                      fixedSize: const Size(200, 50)),
+                  child: Text('Create Account',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, EmailVerificationScreen.id);
+                  }),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  "or",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary: Colors.blue),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(50.0, 10, 50, 10),
-                      child: Text('Login',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, LoginScreen.id);
-                    }),
-              ],
-            ),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.lightGreen,
+                      fixedSize: const Size(200, 50)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text('Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, LoginScreen.id);
+                  }),
+            ],
           ),
         ),
       ),

@@ -72,14 +72,23 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black87),
-          onPressed: () => Navigator.of(context).pop(),
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            TextButton(
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Icon(Icons.close, color: Colors.black87),
+                Text('Close',
+                    style: TextStyle(fontSize: 15, color: Colors.black))
+              ]),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            SizedBox(width: 25),
+          ],
         ),
         centerTitle: false,
         backgroundColor: Colors.white, //Colors.black26,
@@ -203,7 +212,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         SizedBox(height: 12.0),
         Container(
           decoration: BoxDecoration(
-            color: Colors.lightGreen[100],
+            color: Color(0xFF3EB16F).withOpacity(0.5),
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
@@ -498,7 +507,8 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
             String name = UserAccountController.userDetails.name;
             DatabaseController db = DatabaseController();
             await db.updateReminder(name, newReminder);
-            await NotificationController.changeDailyNotifications(newReminder, _oldFrequency);
+            await NotificationController.changeDailyNotifications(
+                newReminder, _oldFrequency);
             Navigator.pop(context);
           }
         });
