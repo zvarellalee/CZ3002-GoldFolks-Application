@@ -15,7 +15,7 @@ class MentalMathGameScreen extends StatefulWidget {
 }
 
 class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
-  static int _maxTime = 15;
+  static int _maxTime = 60;
   static int _counter = _maxTime;
   static int _bestScore = UserAccountController.userDetails.MentalMathScore;
   int _currScore = 0;
