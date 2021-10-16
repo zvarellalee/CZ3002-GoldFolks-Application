@@ -20,9 +20,9 @@ class MentalMathController {
         operand1 = _rng.nextInt(_maxValue); // TODO: if including negative operands
         operand2 = _rng.nextInt(_maxValue);
         break;
-      case 3:
+      case 3: // division
         operand2 = _rng.nextInt(_maxValue);
-        temp = _rng.nextInt(_maxValue);
+        temp = _rng.nextInt(_maxValue)+1;
         operand1 = (operand2*temp).toInt();
         break;
       default:
@@ -40,18 +40,22 @@ class MentalMathController {
   // Generate the questions for a given math question
   static List<AnswerScorePair> generateChoices(MathQuestion question) {
     List<AnswerScorePair> choiceList = [];
+    Set<int> distinctNums = new Set();
     int answer, minR, maxR;
-    double gen;
+    int gen;
     answer = question.answerInt;
     minR = answer-_range; // TODO: if including negative answers...
     maxR = (answer+_range).abs();
+    distinctNums.add(answer);
     choiceList.add(new AnswerScorePair(answer: question.answerDouble, score: question.score,));
+    // better, utilizes set for O(1) checking
     for (int i = 0; i<3; i++) {
-      gen = _next(minR, maxR);
-      while (gen == answer) { // don't generate the same answer as the actual answer.
-        gen = _next(minR, maxR);
+      gen = _next(minR, maxR).toInt();
+      while (distinctNums.contains(gen)) { // don't generate the same answer as the actual answer.
+        gen = _next(minR, maxR).toInt();
       }
-      choiceList.add(new AnswerScorePair(answer: _next(minR, maxR), score: 0));
+      choiceList.add(new AnswerScorePair(answer: gen.toDouble(), score: 0));
+      distinctNums.add(gen);
     }
     choiceList.shuffle();
     return choiceList;

@@ -37,10 +37,7 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        setState(() {
-          SimonSaysController.closeStream();
-        });
-        Navigator.pop(context);
+        showAlertDialog(context);
         return false;
       },
       child: SafeArea(
@@ -265,6 +262,42 @@ class _SimonSaysGameScreenState extends State<SimonSaysGameScreen> {
             ),
           ),
         ]
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () async {
+        setState(() {
+          SimonSaysController.closeStream();
+        });
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: Text("Are you sure you want to quit?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

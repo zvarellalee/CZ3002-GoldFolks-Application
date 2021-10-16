@@ -15,7 +15,7 @@ class MentalMathGameScreen extends StatefulWidget {
 }
 
 class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
-  static int _maxTime = 60;
+  static int _maxTime = 10;
   static int _counter = _maxTime;
   static int _bestScore = UserAccountController.userDetails.MentalMathScore;
   int _currScore = 0;
@@ -54,6 +54,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
       _currScore = 0;
       _mathQuestion = MentalMathController.generateMathQuestion();
       _answersList = MentalMathController.generateChoices(_mathQuestion);
+      _bestScore = UserAccountController.userDetails.MentalMathScore;
       _questionsCorrect = 0;
       _numQuestions = 0;
     });
@@ -199,11 +200,7 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
     return WillPopScope(
       // if exit forcefully, stop the timer.
       onWillPop: () async {
-        setState(() {
-          _timer.cancel();
-          _counter = _maxTime;
-        });
-        Navigator.pop(context);
+        showAlertDialog(context);
         return false;
       },
       child: SafeArea(
@@ -346,6 +343,43 @@ class _MentalMathGameScreenState extends State<MentalMathGameScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () async {
+        setState(() {
+          _timer.cancel();
+          _counter = _maxTime;
+        });
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(""),
+      content: Text("Are you sure you want to quit?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
