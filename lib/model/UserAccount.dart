@@ -47,4 +47,15 @@ class UserAccount {
   set Reminders(List<Reminder> Reminders) {
     _Reminders = Reminders;
   }
+
+  getScore(String variableName) {
+    switch (variableName) {
+      case "SimonSaysScore":
+        return _SimonSaysScore;
+      case "MentalMathScore":
+        return _MentalMathScore;
+      default:
+        return _MentalMathScore;
+    }
+  }
 }

@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
+import 'package:goldfolks/controller/ScreenController.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/view/ExerciseVideo/ExerciseScreen.dart';
+import 'package:goldfolks/view/GameScreen.dart';
+import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  static String id = 'HomeScreen';
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final DatabaseController _auth = DatabaseController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    NotificationController.tryListen();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -17,14 +39,16 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // TODO: Select name from user account
                     Text(
-                      "Welcome, John!",
-                      textScaleFactor: 1.5,
+                      "Welcome, ${UserAccountController.userDetails.name}",
+                      textScaleFactor: 1.6,
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Text(
                       "What would you like to do today?",
-                      textScaleFactor: 1,
+                      textScaleFactor: 1.2,
                     ),
                   ],
                 ),
@@ -42,7 +66,7 @@ class HomeScreen extends StatelessWidget {
                       RemindersButton(context),
                       GameButton(context),
                       ExerciseButton(context),
-                      SettingsButton(context),
+                      logoutButton(context, _auth),
                     ],
                   )),
             ),
@@ -59,8 +83,7 @@ Widget RemindersButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Medication");
-          Navigator.pushNamed(context, '/reminder');
+          Navigator.pushNamed(context, ReminderScreen.id);
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -72,15 +95,15 @@ Widget RemindersButton(BuildContext context) {
         ),
         child: Wrap(
           children: <Widget>[
-            Text("Medication Reminders", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.add_alert_rounded,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Medication Reminders", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -94,8 +117,7 @@ Widget GameButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Game");
-          Navigator.pushNamed(context, '/game');
+          Navigator.pushNamed(context, GameScreen.id);
         },
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -107,15 +129,15 @@ Widget GameButton(BuildContext context) {
         ),
         child: Wrap(
           children: <Widget>[
-            Text("Cognitive Games", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.videogame_asset,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Cognitive Games", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -129,8 +151,7 @@ Widget ExerciseButton(BuildContext context) {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print("Pressed Exercise");
-          Navigator.pushNamed(context, '/exercise');
+          Navigator.pushNamed(context, ExerciseScreen.id);
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -138,21 +159,22 @@ Widget ExerciseButton(BuildContext context) {
                 borderRadius: BorderRadius.circular(18.0),
               ),
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                Colors.redAccent.withOpacity(0.95)),
             minimumSize: MaterialStateProperty.all<Size>(
               Size(double.infinity, 30),
             )),
         child: Wrap(
           children: <Widget>[
-            Text("Exercise Videos", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
             Icon(
               Icons.video_collection_sharp,
               color: Colors.white,
               size: 24.0,
             ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Exercise Videos", style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
@@ -160,39 +182,33 @@ Widget ExerciseButton(BuildContext context) {
   );
 }
 
-Widget SettingsButton(BuildContext context) {
-  return Expanded(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ElevatedButton(
-        onPressed: () {
-          print("Pressed Settings");
-          Navigator.pushNamed(context, '/settings');
-        },
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
+Widget logoutButton(BuildContext context, DatabaseController auth) {
+  return Padding(
+    padding: const EdgeInsets.all(9.0),
+    child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.all(5),
+          primary: Colors.black.withOpacity(0.5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Icon(
+                Icons.logout,
+                color: Colors.white,
               ),
             ),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.black26),
-            minimumSize: MaterialStateProperty.all<Size>(
-              Size(double.infinity, 30),
-            )),
-        child: Wrap(
-          children: <Widget>[
-            Text("Settings", style: TextStyle(fontSize: 20)),
-            SizedBox(
-              width: 10,
-            ),
-            Icon(
-              Icons.settings,
-              color: Colors.white,
-              size: 24.0,
-            ),
+            Text('Log Out',
+                style: TextStyle(color: Colors.white, fontSize: 18)),
           ],
         ),
-      ),
-    ),
+        onPressed: () async {
+          await NotificationController
+              .cancelAllNotifications(); // cancel all notifications on log out.
+          await auth.signOut();
+          Navigator.popUntil(context, ModalRoute.withName(ScreenController.id));
+        }),
   );
 }

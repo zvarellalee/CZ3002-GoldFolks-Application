@@ -1,118 +1,160 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:goldfolks/view/ExerciseScreen.dart';
+import 'package:flutter/services.dart';
+import 'package:goldfolks/controller/DatabaseController.dart';
+import 'package:goldfolks/controller/NotificationController.dart';
+import 'package:goldfolks/controller/ScreenController.dart';
+import 'package:goldfolks/controller/UserAccountController.dart';
+import 'package:goldfolks/model/Reminder.dart';
+import 'package:goldfolks/model/UserAccount.dart';
+import 'package:goldfolks/view/Account/EmailVerificationScreen.dart';
+import 'package:goldfolks/view/ExerciseVideo/ExerciseScreen.dart';
+import 'package:goldfolks/view/Account/ForgotPasswordScreen.dart';
 import 'package:goldfolks/view/GameScreen.dart';
 import 'package:goldfolks/view/HomeScreen.dart';
-import 'package:goldfolks/view/ReminderScreen.dart';
-import 'package:goldfolks/view/SettingsScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathLeaderboardScreen.dart';
+import 'package:goldfolks/view/Account/LoginScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathGameScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathMenuScreen.dart';
+import 'package:goldfolks/view/MentalMathGame/MentalMathTutorialScreen.dart';
+import 'package:goldfolks/view/Reminder/AddReminderScreen.dart';
+import 'package:goldfolks/view/Reminder/EditReminderScreen.dart';
+import 'package:goldfolks/view/Reminder/ReminderScreen.dart';
+import 'package:goldfolks/view/Account/SignUpScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysGameScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysLeaderboardScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysMenuScreen.dart';
+import 'package:goldfolks/view/SimonSaysGame/SimonSaysTutorialScreen.dart';
+import 'package:goldfolks/view/ExerciseVideo/VideoPlayerScreen.dart';
+import 'package:goldfolks/view/WelcomeScreen.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // initialize firebase
+  await Firebase.initializeApp();
+  // initialize notification channel
+  AwesomeNotifications().initialize(
+    'resource://drawable/notification_bell',
+    [
+      NotificationChannel(
+        channelKey: 'scheduled_channel',
+        channelName: 'Scheduled Notifications',
+        defaultColor: Colors.teal,
+        locked: true,
+        importance: NotificationImportance.High,
+        soundSource: 'resource://raw/res_custom_notification',
+      ),
+    ],
+  );
+  // lock rotation
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(new GoldFolksApp());
+  });
 }
 
-class MyApp extends StatelessWidget {
+class GoldFolksApp extends StatelessWidget {
   // This widget is the root of your application.
   // TODO: connect to login screen on startup (only for the first time)
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Persistant Bottom Navigation Bar',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/game': (context) => GameScreen(),
-        '/exercise': (context) => ExerciseScreen(),
-        '/reminder': (context) => ReminderScreen(),
-        '/settings': (context) => SettingsScreen(),
-      },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return StreamProvider<UserAccount>.value(
+      value: DatabaseController().user,
+      initialData: UserAccountController.userDetails,
+      child: MaterialApp(
+          title: 'GoldFolks',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          initialRoute: ScreenController.id,
+          routes: {
+            ScreenController.id: (context) => ScreenController(),
+            WelcomeScreen.id: (context) => WelcomeScreen(),
+            SignUpScreen.id: (context) => SignUpScreen(),
+            LoginScreen.id: (context) => LoginScreen(),
+            EmailVerificationScreen.id: (context) => EmailVerificationScreen(),
+            ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
+            HomeScreen.id: (context) => HomeScreen(),
+
+            // game screens
+            GameScreen.id: (context) => GameScreen(),
+
+            // Mental Math game
+            MentalMathMenuScreen.id: (context) => MentalMathMenuScreen(),
+            MentalMathGameScreen.id: (context) => MentalMathGameScreen(),
+            MentalMathTutorialScreen.id: (context) =>
+                MentalMathTutorialScreen(),
+            MentalMathLeaderboardScreen.id: (context) =>
+                MentalMathLeaderboardScreen(),
+
+            // Simon Says game
+            SimonSaysMenuScreen.id: (context) => SimonSaysMenuScreen(),
+            SimonSaysGameScreen.id: (context) => SimonSaysGameScreen(),
+            SimonSaysTutorialScreen.id: (context) => SimonSaysTutorialScreen(),
+            SimonSaysLeaderboardScreen.id: (context) =>
+                SimonSaysLeaderboardScreen(),
+
+            // Exercise Video screen
+            ExerciseScreen.id: (context) => ExerciseScreen(),
+            VideoPlayerScreen.id: (context) => VideoPlayerScreen(),
+
+            // Reminder screen
+            ReminderScreen.id: (context) => ReminderScreen(),
+            //EditReminderScreen.id: (context) => EditReminderScreen(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == AddReminderScreen.id) {
+              return PageRouteBuilder(
+                settings: settings,
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    AddReminderScreen(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(0.0, 1.0);
+                  const end = Offset.zero;
+                  const curve = Curves.ease;
+
+                  var tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              );
+            } else if (settings.name == EditReminderScreen.id) {
+              Reminder reminder = settings.arguments;
+              return MaterialPageRoute(
+                  builder: (_) => EditReminderScreen(
+                        reminder: reminder,
+                      ));
+            }
+            //          else if (settings.name == EditReminderScreen.id) {
+            //   return PageRouteBuilder(
+            //     settings: settings,
+            //     pageBuilder: (context, animation, secondaryAnimation) =>
+            //         EditReminderScreen(),
+            //     transitionsBuilder:
+            //         (context, animation, secondaryAnimation, child) {
+            //       const begin = Offset(0.0, 1.0);
+            //       const end = Offset.zero;
+            //       const curve = Curves.ease;
+            //
+            //       var tween = Tween(begin: begin, end: end)
+            //           .chain(CurveTween(curve: curve));
+            //
+            //       return SlideTransition(
+            //         position: animation.drive(tween),
+            //         child: child,
+            //       );
+            //     },
+            //   );
+            // }
+          }),
     );
   }
 }

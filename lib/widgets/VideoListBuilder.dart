@@ -1,31 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:goldfolks/controller/VideoPlayerController.dart';
+import 'package:goldfolks/model/VideoCategory.dart';
 
 import 'VideoListWidget.dart';
 
-class PlaceholderWidget extends StatelessWidget {
+class VideoListBuilder extends StatelessWidget {
   final Color color;
+  final VideoCategory category;
 
-  PlaceholderWidget(this.color);
-
+  VideoListBuilder(this.color, this.category);
+  //List<String> aerobicList = await VideoPlayerController.getAllVideos(VideoCategory.Aerobic)
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: color,
-          child: Column(
-            children: [
-              Container(
-                height: 100.0,
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemExtent: 100.0,
-                  itemCount: 1, //TODO : pull videos from database for dynamic loading
-                  itemBuilder: (BuildContext context, int index) {
-                    return VideoListWidget("https://www.youtube.com/watch?v=p-rSdt0aFuw");
-                    }
-                )
-              )
-            ],
-          ),
+    return FutureBuilder(
+      future: VideoPlayerController.getAllVideos(category),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.none &&
+            snapshot.hasData == null) {
+          return Container(
+            color: color,
+          );
+        } else if (snapshot.hasData)
+        return Container(
+          color: color,
+          height: 100.0,
+          child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemExtent: 100.0,
+              itemCount: snapshot.data.length,
+              //TODO : pull videos from database for dynamic loading
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    VideoListWidget(snapshot.data[index]),
+                  ],
+                );
+              }
+          )
+        );
+        else
+          return Container(
+            color: color,
+          );
+      }
     );
   }
 }
